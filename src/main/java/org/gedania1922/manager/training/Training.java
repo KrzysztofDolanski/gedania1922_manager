@@ -1,9 +1,12 @@
 package org.gedania1922.manager.training;
 
 import lombok.*;
+import org.gedania1922.manager.peoples.Player;
 import org.gedania1922.manager.peoples.Team;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Entity
@@ -14,16 +17,16 @@ public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String dateOfTraining;
+    private LocalDate dateOfTraining;
     private String typeOfTraining;
 
-    @ManyToOne
+    @ManyToMany (mappedBy = "trainings")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Team teamId;
+    private Set<Player> players;
 
 
-    public Training(String dateOfTraining, String typeOfTraining) {
+    public Training(LocalDate dateOfTraining, String typeOfTraining) {
         this.dateOfTraining = dateOfTraining;
         this.typeOfTraining = typeOfTraining;
     }

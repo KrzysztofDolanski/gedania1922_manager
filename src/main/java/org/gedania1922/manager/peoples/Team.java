@@ -31,10 +31,10 @@ public class Team {
     @EqualsAndHashCode.Exclude
     private Set<Trainer> trainer;
 
-    @OneToMany (mappedBy = "teamId")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<Training> trainings;
+//    @ManyToMany (mappedBy = "teamId")
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private Set<Training> trainings;
 
     public Team(int playerID, int trainerID) {
         this.playerID = playerID;
