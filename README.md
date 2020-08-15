@@ -1,6 +1,14 @@
 # Gedania 1922 Gdańsk Manager 
 This app can help the coaching staff manage players efficiently.
 
+## Prereqiusities
+
+This project use following technologies:
+- JDK 11
+- Hibernate
+- MySQL
+
+You should have access to mysql database, and access to it is in configurraton file in resources.
 
 ## What does it do?
 This application has following funcionalities:
