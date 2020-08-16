@@ -4,6 +4,7 @@ import lombok.*;
 import org.gedania1922.manager.training.Training;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,28 +17,22 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int teamId;
-    private int playerID;
-    private int trainerID;
-    private int trainingId;
+    private int id;
 
     @OneToMany(mappedBy = "teamId")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Player> players;
+    private Set<Player> players = new HashSet<>();
 
     @OneToMany (mappedBy = "teamId")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Trainer> trainer;
+    private Set<Trainer> trainer = new HashSet<>();
 
-//    @ManyToMany (mappedBy = "teamId")
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    private Set<Training> trainings;
+    @OneToMany (mappedBy = "teamId")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Training> trainings = new HashSet<>();
 
-    public Team(int playerID, int trainerID) {
-        this.playerID = playerID;
-        this.trainerID = trainerID;
-    }
+
 }

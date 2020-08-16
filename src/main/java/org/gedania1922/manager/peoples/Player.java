@@ -17,11 +17,13 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String surnamePlayer;
-    private String namePlayer;
+    private String surname;
+    private String name;
     private LocalDate birthDate;
-    private double weightPlayer;
-    private double growthPlayer;
+    private double weight;
+    private double growth;
+
+    @Enumerated(value = EnumType.STRING)
     private Position positionOnField;
     private boolean rightFooted;
     private boolean leftFooted;
@@ -36,18 +38,18 @@ public class Player {
     private Set<Training> trainings;
 
 
-    public Player(String surnamePlayer, String namePlayer) {
-        this.surnamePlayer = surnamePlayer;
-        this.namePlayer = namePlayer;
+    public Player(String surname, String name) {
+        this.surname = surname;
+        this.name = name;
     }
 
-    public Player(String surnamePlayer, String namePlayer, LocalDate birthDate, double weightPlayer,
-                  double growthPlayer, Position positionOnField, boolean rightFooted, boolean leftFooted, double skillsValue) {
-        this.surnamePlayer = surnamePlayer;
-        this.namePlayer = namePlayer;
+    public Player(String surname, String name, LocalDate birthDate, double weight,
+                  double growth, Position positionOnField, boolean rightFooted, boolean leftFooted, double skillsValue) {
+        this.surname = surname;
+        this.name = name;
         this.birthDate = birthDate;
-        this.weightPlayer = weightPlayer;
-        this.growthPlayer = growthPlayer;
+        this.weight = weight;
+        this.growth = growth;
         this.positionOnField = positionOnField;
         this.rightFooted = rightFooted;
         this.leftFooted = leftFooted;
