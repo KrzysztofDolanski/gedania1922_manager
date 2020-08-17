@@ -12,7 +12,7 @@
         <!--powyższa linia służy do wskazania hibernate'owi sterownika bazy danych-->
 
         <property name="connection.username">root</property>
-        <property name="connection.password">Anahita77!</property>
+        <property name="connection.password">root</property>
 
         <!--DB schema will be updated if needed -->
         <!--Hibernate model to data definition language-->

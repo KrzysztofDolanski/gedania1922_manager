@@ -30,7 +30,6 @@ public class Application {
 
         Scanner scanner = new Scanner(System.in);
 
-
         String userCommand;
 
         do {
@@ -52,9 +51,19 @@ public class Application {
             } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("find")
                     && words[2].equalsIgnoreCase("by") && words[3].equalsIgnoreCase("id")){
                 findByIdPlayer(words);
+            } else if (words [0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("by")
+                    && words[2].equalsIgnoreCase("by")){
+                System.out.println("surname\n name \n birth date\n field position");
+                userCommand = scanner.nextLine();
+                String [] words2 = userCommand.split(" ");
+                if (words2[0].equalsIgnoreCase("surname")){
+                    findBySurnamePlayer(words2);
+                }else if (words2[0].equalsIgnoreCase("name")){
+//                    findByNamePlayer(words2);
+                }
             }
-        }while (!userCommand.equalsIgnoreCase("quit"));
 
+        }while (!userCommand.equalsIgnoreCase("quit"));
 
 //        EntityDao<Player> playerEntityDao = new EntityDao<>();
 //        EntityDao<Team> teamEntityDao = new EntityDao<>();
@@ -66,8 +75,22 @@ public class Application {
 //        teamEntityDao.saveOrUpdate(new Team(1, 1));
 //        trainingEntityDao.saveOrUpdate(new Training(LocalDate.of(1, Month.APRIL, 12), "skipy"));
 
-
         scanner.close();
+    }
+
+    private static void findBySurnamePlayer(String[] words2) {
+        EntityDao<Player> playerEntityDao = new EntityDao<>();
+        System.out.println("choose player surname to find\n");
+//        showPlayers(words);
+        Scanner scanner = new Scanner(System.in);
+        String playerChoosen = scanner.nextLine();
+
+        Optional<Player> resultPlayerOptional = playerEntityDao.findByLastName(Player.class, playerChoosen);
+        if (resultPlayerOptional.isPresent()){
+            System.out.println("Znaleziono " + resultPlayerOptional.get());
+        }else System.out.println("nie znaleziono");
+
+
     }
 
 

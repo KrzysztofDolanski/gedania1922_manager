@@ -42,6 +42,19 @@ public class EntityDao <T>{
         return Optional.empty();
     }
 
+    public Optional<T> findByLastName(Class<T> classType, String surname) {
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+
+            // istnieje prawdopodobieństwo, że rekord nie zostanie odnaleziony
+            return Optional.ofNullable(session.get(classType, surname));
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return Optional.empty();
+
+    }
+
 
 
     public void delete(T entity) {
