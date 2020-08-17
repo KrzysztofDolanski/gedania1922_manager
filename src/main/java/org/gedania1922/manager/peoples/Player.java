@@ -11,12 +11,11 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private String surname;
     private String name;
     private LocalDate birthDate;
@@ -36,6 +35,7 @@ public class Player {
 
     @ManyToMany (fetch = FetchType.EAGER)
     private Set<Training> trainings;
+
 
 
     public Player(String surname, String name) {

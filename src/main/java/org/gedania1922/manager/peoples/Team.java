@@ -29,7 +29,7 @@ public class Team {
     @EqualsAndHashCode.Exclude
     private Set<Trainer> trainer = new HashSet<>();
 
-    @OneToMany (mappedBy = "teamId")
+    @OneToMany
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Training> trainings = new HashSet<>();

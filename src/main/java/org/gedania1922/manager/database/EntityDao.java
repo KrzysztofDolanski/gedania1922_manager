@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EntityDao <T> {
+public class EntityDao <T>{
 
     public void saveOrUpdate(T entity) {
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
@@ -41,6 +41,8 @@ public class EntityDao <T> {
         }
         return Optional.empty();
     }
+
+
 
     public void delete(T entity) {
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();

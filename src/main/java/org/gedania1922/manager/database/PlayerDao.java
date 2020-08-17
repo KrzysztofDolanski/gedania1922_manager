@@ -1,8 +1,10 @@
 package org.gedania1922.manager.database;
 
+import org.gedania1922.manager.peoples.Player;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,6 +15,8 @@ import java.util.List;
 
 
 public class PlayerDao  {
+
+    private HibernateFactory hibernateFactory = new HibernateFactory();
 
     public <T extends LastNameSearchable> List<T> findByLastName(Class<T> classType, String surname){
         List<T> list = new ArrayList<>();
@@ -47,4 +51,6 @@ public class PlayerDao  {
 
         return list;
     }
+
+
 }

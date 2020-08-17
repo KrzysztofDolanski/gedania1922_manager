@@ -3,13 +3,19 @@ package org.gedania1922.manager;
 
 import org.gedania1922.manager.database.EntityDao;
 import org.gedania1922.manager.database.HibernateFactory;
+import org.gedania1922.manager.database.PlayerDao;
 import org.gedania1922.manager.peoples.Player;
 import org.gedania1922.manager.peoples.Team;
 import org.gedania1922.manager.peoples.Trainer;
 import org.gedania1922.manager.training.Training;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -24,6 +30,7 @@ public class Application {
 
         Scanner scanner = new Scanner(System.in);
 
+
         String userCommand;
 
         do {
@@ -31,6 +38,7 @@ public class Application {
             System.out.println("Player add \n" +
                     "Player show \n" +
                     "Player find by id \n" +
+                    "Player delete\n" +
                     "Quit");
             userCommand = scanner.nextLine();
             String [] words = userCommand.split(" ");
@@ -62,26 +70,39 @@ public class Application {
         scanner.close();
     }
 
-    //Ta metoda ma jakiś problem-------------------------------------------------------
+
     private static void findByIdPlayer(String[] words) {
         EntityDao<Player> playerEntityDao = new EntityDao<>();
         System.out.println("choose player ID to find\n");
-        showPlayers(words);
+//        showPlayers(words);
         Scanner scanner = new Scanner(System.in);
-        Long playerChoosen = scanner.nextLong();
-        Stream<Player> stream = playerEntityDao.findAll(Player.class).stream();
-        System.out.println(stream.filter(n -> n.equals(playerChoosen)));
+        Long playerChoosen = Long.parseLong(scanner.nextLine());
+
+        Optional<Player> resultPlayerOptional = playerEntityDao.findById(Player.class, playerChoosen);
+        if (resultPlayerOptional.isPresent()){
+            System.out.println("Znaleziono " + resultPlayerOptional.get());
+        }else System.out.println("nie znaleziono");
+
     }
 
     //Ta metoda ma jakiś problem-------------------------------------------------------
     private static void deletePlayer(String[] words) {
-        EntityDao<Player> entityDao = new EntityDao<>();
-        System.out.println("choose player number to delete\n");
-        showPlayers(words);
-        Scanner scanner = new Scanner(System.in);
-        Long playerToDeleteFromDataBase = scanner.nextLong();
 
-        entityDao.delete((entityDao.findById(Player.class, playerToDeleteFromDataBase).stream()).findAny().get());
+
+        Player[] players = new Player[10];
+        Session session = HibernateFactory.getSessionFactory().openSession();
+
+        EntityDao<Player> playerEntityDao = new EntityDao<>();
+        System.out.println("choose player number to delete\n");
+        Scanner scanner = new Scanner(System.in);
+        Long playerChoosen =  Long.parseLong(scanner.nextLine());
+        Optional<Player> playerToDeleteFromDataBase = playerEntityDao.findById(Player.class, playerChoosen);
+        if (playerToDeleteFromDataBase.isPresent()){
+            Player player = playerToDeleteFromDataBase.get();
+            System.out.println("Usuwam" + playerToDeleteFromDataBase.get());
+            playerEntityDao.delete(player);
+        } else System.out.println("Nie znaleziono");
+        session.close();
     }
 
     private static void addPlayer(String[] words) {
@@ -102,11 +123,20 @@ public class Application {
         System.out.println("Write Hight");
         double hight = scanner.nextDouble();
 
-        System.out.println("Choose number for position: 1 for GOALKEEPER \n " +
-                "2 for LEFT_FULLBACK \n, 3 for RIGHT_FULLBACK \n, 4 for SWEEPER \n, 5 for CENTER_BACK,\n" +
-                "6 for DEFENSIVE_MIDFIELDER \n, 7 for CENTRAL_MIDFIELDER \n, 8 for ATTACKING_MIDFIELDER \n , " +
-                "9 for LEFT_MIDFIELDER \n, 10 for RIGHT_MIDFIELDER,\n" +
-                " 11 for CENTER_FORWARD \n, 12 for STRIKER \n, 13 for SECOND_STRIKER");
+        System.out.println("Choose number for position:\n " +
+                "1 for GOALKEEPER \n" +
+                "2 for LEFT_FULLBACK \n" +
+                "3 for RIGHT_FULLBACK \n" +
+                "4 for SWEEPER \n" +
+                "5 for CENTER_BACK\n" +
+                "6 for DEFENSIVE_MIDFIELDER \n" +
+                "7 for CENTRAL_MIDFIELDER \n" +
+                "8 for ATTACKING_MIDFIELDER \n" +
+                "9 for LEFT_MIDFIELDER \n " +
+                "10 for RIGHT_MIDFIELDER\n" +
+                " 11 for CENTER_FORWARD \n" +
+                "12 for STRIKER \n" +
+                "13 for SECOND_STRIKER");
 
         int possition = scanner.nextInt();
         Player.Position choosenPossition;
