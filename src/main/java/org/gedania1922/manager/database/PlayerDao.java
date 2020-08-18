@@ -86,6 +86,22 @@ public class PlayerDao  {
         return list;
     }
 
+    public List<Player> findPosition(Class<Player> classType, Player.Position position){
+        List<Player>list = new ArrayList<>();
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Player> criteriaQuery = cb.createQuery(classType);
+            Root<Player> rootTable = criteriaQuery.from(classType);
+            criteriaQuery.select(rootTable)
+                    .where(cb.equal(rootTable.get("positionOnField"), position));
+            list.addAll(session.createQuery(criteriaQuery).list());
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return list;
+    }
+
     public List<Player> findByGrowth(Class<Player> classType, double growth){
         List<Player>list = new ArrayList<>();
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();

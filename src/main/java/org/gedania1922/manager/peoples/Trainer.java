@@ -28,4 +28,10 @@ public class Trainer {
         this.surmane = surmane;
         this.name = name;
     }
+
+    public Trainer(String surmane, String name, String certyficates) {
+        this.surmane = surmane;
+        this.name = name;
+        this.certyficates = certyficates;
+    }
 }

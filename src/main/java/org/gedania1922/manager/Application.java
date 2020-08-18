@@ -29,54 +29,99 @@ public class Application {
 
         Scanner scanner = new Scanner(System.in);
 
-        String userCommand;
 
-        do {
-            System.out.println("write command");
-            System.out.println("Player add \n" +
-                    "Player show \n" +
-                    "Player find by \n" +
-                    "Player delete\n" +
-                    "Quit");
-            userCommand = scanner.nextLine();
-            String [] words = userCommand.split(" ");
+        String userCommandPrevious;
 
-            if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("show")){
-                showPlayers(words);
-            } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("add")){
-                addPlayer(words);
-            } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("delete")){
-                deletePlayer(words);
-            } else if (words [0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("find")
-                    && words[2].equalsIgnoreCase("by")){
-                System.out.println(" id\n surname\n name\n weight\n growth \n date\n field position\n foot");
-                userCommand = scanner.nextLine();
-                String [] words2 = userCommand.split(" ");
-                if (words2[0].equalsIgnoreCase("id")) {
-                    findByIdPlayer(words2);
-                }else if (words2[0].equalsIgnoreCase("surname")){
-                    findBySurnamePlayer(words2);
-                }else if (words2[0].equalsIgnoreCase("name")){
-                    findByNamePlayer(words2);
-                }else if (words2[0].equalsIgnoreCase("weight")) {
-                    findByWeightPlayer(words2);
-                }else if (words2[0].equalsIgnoreCase("growth")){
-                    findByGrowthPlayer(words2);
-                }else if (words2[0].equalsIgnoreCase("date")){
-                    findByDatePlayer(words2);
-                }else if (words2[0].equalsIgnoreCase("foot")){
-                    System.out.println("right\n left\n both");
-                    userCommand = scanner.nextLine();
-                    String [] words3 = userCommand.split(" ");
-                    if (words3[0].equalsIgnoreCase("left")){
-                        findLeftFootPlayers(words3);
-                    }else if (words3[0].equalsIgnoreCase("right")){
-                        findRightFootPlayers(words3);
-                    }
+            do {
+                System.out.println("Write witch table in database you wanted to use");
+                System.out.println("Player\n" +
+                        "Trainer\n" +
+                        "Team\n" +
+                        "Training\n" +
+                        "Quit");
+                userCommandPrevious = scanner.nextLine();
+                String[] wordsPrevious = userCommandPrevious.split(" ");
+
+                if (wordsPrevious[0].equalsIgnoreCase("player")) {
+                    String userCommand;
+                    do {
+                        System.out.println("write command");
+                        System.out.println("Player add \n" +
+                                "Player show \n" +
+                                "Player find by \n" +
+                                "Player delete\n" +
+                                "Quit");
+                        userCommand = scanner.nextLine();
+                        String[] words = userCommand.split(" ");
+
+                        if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("show")) {
+                            showPlayers(words);
+                        } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("add")) {
+                            addPlayer(words);
+                        } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("delete")) {
+                            deletePlayer(words);
+                        } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("find")
+                                && words[2].equalsIgnoreCase("by")) {
+                            System.out.println(" id\n surname\n name\n weight\n growth \n date\n position\n foot");
+                            userCommand = scanner.nextLine();
+                            String[] words2 = userCommand.split(" ");
+                            if (words2[0].equalsIgnoreCase("id")) {
+                                findByIdPlayer(words2);
+                            } else if (words2[0].equalsIgnoreCase("surname")) {
+                                findBySurnamePlayer(words2);
+                            } else if (words2[0].equalsIgnoreCase("name")) {
+                                findByNamePlayer(words2);
+                            } else if (words2[0].equalsIgnoreCase("weight")) {
+                                findByWeightPlayer(words2);
+                            } else if (words2[0].equalsIgnoreCase("growth")) {
+                                findByGrowthPlayer(words2);
+                            } else if (words2[0].equalsIgnoreCase("date")) {
+                                findByDatePlayer(words2);
+                            } else if (words2[0].equalsIgnoreCase("foot")) {
+                                System.out.println("right\n left\n both");
+                                userCommand = scanner.nextLine();
+                                String[] words3 = userCommand.split(" ");
+                                if (words3[0].equalsIgnoreCase("left")) {
+                                    findLeftFootPlayers(words3);
+                                } else if (words3[0].equalsIgnoreCase("right")) {
+                                    findRightFootPlayers(words3);
+                                } else if (words3[0].equalsIgnoreCase("both")) {
+                                    findBothFootedPlayer(words3);
+                                }
+                            } else if (words2[0].equalsIgnoreCase("position")) {
+                                findByPositionPlayer(words2);
+                            }
+                        }
+
+                    } while (!userCommand.equalsIgnoreCase("quit"));
+
+                }else if (wordsPrevious[0].equalsIgnoreCase("trainer")) {
+                    String userCommandTrainer;
+                    do {
+                        System.out.println("write command");
+                        System.out.println("Trainer add \n" +
+                                "Trainer show \n" +
+                                "Trainer find by \n" +
+                                "Trainer delete\n" +
+                                "Quit");
+                        userCommandTrainer = scanner.nextLine();
+                        String[] words = userCommandTrainer.split(" ");
+
+                        if (words[0].equalsIgnoreCase("trainer")&&words[1].equalsIgnoreCase("add")){
+                            addTrainer(words);
+                        }
+
+
+                }while (!userCommandTrainer.equalsIgnoreCase("quit"));
+
+                }else if (wordsPrevious[0].equalsIgnoreCase("trening")){
+                    System.out.println("metody do treningu");
+                }else if (wordsPrevious[0].equalsIgnoreCase("team")){
+                    System.out.println("metodu do drużyny");
                 }
-            }
 
-        }while (!userCommand.equalsIgnoreCase("quit"));
+            } while (!userCommandPrevious.equalsIgnoreCase("quit"));
+
 
 //        EntityDao<Player> playerEntityDao = new EntityDao<>();
 //        EntityDao<Team> teamEntityDao = new EntityDao<>();
@@ -88,8 +133,22 @@ public class Application {
 //        teamEntityDao.saveOrUpdate(new Team(1, 1));
 //        trainingEntityDao.saveOrUpdate(new Training(LocalDate.of(1, Month.APRIL, 12), "skipy"));
 
-        scanner.close();
+            scanner.close();
+        }
+
+    private static void addTrainer(String[] words) {
+        EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Write surname");
+        String surname = scanner.nextLine();
+        System.out.println("write name");
+        String name = scanner.nextLine();
+        System.out.println("write certyficates");
+        String certyficates = scanner.nextLine();
+
+        trainerEntityDao.saveOrUpdate(new Trainer(surname, name, certyficates));
     }
+
 
     private static void findBySurnamePlayer(String[] words2) {
         PlayerDao playerDao = new PlayerDao();
@@ -185,6 +244,63 @@ public class Application {
             resultPlayersList.forEach(System.out::println);
         }else System.out.println("nie znaleziono");
     }
+
+    public static Set<Player> findDoublets (List<Player> list){
+        final Set<Player> setToReturn = new HashSet<Player>();
+        final Set<Player> set1 = new HashSet<Player>();
+
+        for (Player yourPlayer : list){
+            if(!set1.add(yourPlayer)){
+                setToReturn.add(yourPlayer);
+            }
+        }
+        return setToReturn;
+    }
+
+    private static void findBothFootedPlayer(String[] words2){
+        PlayerDao playerDao = new PlayerDao();
+        System.out.println("find rightfooted players:\n");
+        boolean playerChoosen = true;
+        List<Player> resultPlayersList = (playerDao.findRightFooted(Player.class, playerChoosen));
+        List<Player> leftFooted = playerDao.findLeftFooted(Player.class, playerChoosen);
+
+        List<Player> margedList = new ArrayList<>();
+        margedList.addAll(resultPlayersList);
+        margedList.addAll(leftFooted);
+
+        Set<Player> doublets = findDoublets(margedList);
+
+        if (doublets.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            doublets.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
+    private static void findByPositionPlayer(String[] words2){
+        PlayerDao playerDao = new PlayerDao();
+        System.out.println("choose player position to find\n" +
+                "GOALKEEPER \n" +
+                "LEFT_FULLBACK \n" +
+                "RIGHT_FULLBACK \n" +
+                "SWEEPER \n" +
+                "CENTER_BACK\n" +
+                "DEFENSIVE_MIDFIELDER \n" +
+                "CENTRAL_MIDFIELDER \n" +
+                "ATTACKING_MIDFIELDER \n" +
+                "LEFT_MIDFIELDER \n " +
+                "RIGHT_MIDFIELDER\n" +
+                "CENTER_FORWARD \n" +
+                "STRIKER \n" +
+                "SECOND_STRIKER");
+        Scanner scanner = new Scanner(System.in);
+        Player.Position playerChoosen = Player.Position.valueOf(scanner.nextLine());
+        List<Player> resultPlayersList = playerDao.findPosition(Player.class, playerChoosen);
+        if (resultPlayersList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultPlayersList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
 
     private static void deletePlayer(String[] words) {
         Player[] players = new Player[10];
@@ -298,7 +414,8 @@ public class Application {
         System.out.println("Enter acctual skill value of the player");
         double skillValue = scanner.nextDouble();
 
-        playerEntityDao.saveOrUpdate(new Player(s, name, LocalDate.of(year, month, day), weight, hight, choosenPossition, rightFootted, leftFooted,skillValue));
+        playerEntityDao.saveOrUpdate(new Player(s, name, LocalDate.of(year, month, day),
+                weight, hight, choosenPossition, rightFootted, leftFooted,skillValue));
     }
 
     private static void showPlayers(String[] words) {
