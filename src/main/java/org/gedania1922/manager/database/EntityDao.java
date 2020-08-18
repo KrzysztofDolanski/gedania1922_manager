@@ -8,7 +8,9 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,19 +44,17 @@ public class EntityDao <T>{
         return Optional.empty();
     }
 
-    public Optional<T> findByLastName(Class<T> classType, String surname) {
-        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-
-            // istnieje prawdopodobieństwo, że rekord nie zostanie odnaleziony
-            return Optional.ofNullable(session.get(classType, surname));
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        }
-        return Optional.empty();
-
-    }
-
+//    public Optional<T> findByBirthDate(Class<T> classType, LocalDate date) {
+//        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+//        try (Session session = sessionFactory.openSession()) {
+//
+//            // istnieje prawdopodobieństwo, że rekord nie zostanie odnaleziony
+//            return Optional.ofNullable(session.get(classType, date));
+//        } catch (HibernateException he) {
+//            he.printStackTrace();
+//        }
+//        return Optional.empty();
+//
 
 
     public void delete(T entity) {

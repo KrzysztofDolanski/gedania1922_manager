@@ -3,6 +3,7 @@ package org.gedania1922.manager;
 
 import org.gedania1922.manager.database.EntityDao;
 import org.gedania1922.manager.database.HibernateFactory;
+import org.gedania1922.manager.database.LastNameSearchable;
 import org.gedania1922.manager.database.PlayerDao;
 import org.gedania1922.manager.peoples.Player;
 import org.gedania1922.manager.peoples.Team;
@@ -12,12 +13,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.Table;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -36,7 +35,7 @@ public class Application {
             System.out.println("write command");
             System.out.println("Player add \n" +
                     "Player show \n" +
-                    "Player find by id \n" +
+                    "Player find by \n" +
                     "Player delete\n" +
                     "Quit");
             userCommand = scanner.nextLine();
@@ -48,18 +47,32 @@ public class Application {
                 addPlayer(words);
             } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("delete")){
                 deletePlayer(words);
-            } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("find")
-                    && words[2].equalsIgnoreCase("by") && words[3].equalsIgnoreCase("id")){
-                findByIdPlayer(words);
-            } else if (words [0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("by")
+            } else if (words [0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("find")
                     && words[2].equalsIgnoreCase("by")){
-                System.out.println("surname\n name \n birth date\n field position");
+                System.out.println(" id\n surname\n name\n weight\n growth \n date\n field position\n foot");
                 userCommand = scanner.nextLine();
                 String [] words2 = userCommand.split(" ");
-                if (words2[0].equalsIgnoreCase("surname")){
+                if (words2[0].equalsIgnoreCase("id")) {
+                    findByIdPlayer(words2);
+                }else if (words2[0].equalsIgnoreCase("surname")){
                     findBySurnamePlayer(words2);
                 }else if (words2[0].equalsIgnoreCase("name")){
-//                    findByNamePlayer(words2);
+                    findByNamePlayer(words2);
+                }else if (words2[0].equalsIgnoreCase("weight")) {
+                    findByWeightPlayer(words2);
+                }else if (words2[0].equalsIgnoreCase("growth")){
+                    findByGrowthPlayer(words2);
+                }else if (words2[0].equalsIgnoreCase("date")){
+                    findByDatePlayer(words2);
+                }else if (words2[0].equalsIgnoreCase("foot")){
+                    System.out.println("right\n left\n both");
+                    userCommand = scanner.nextLine();
+                    String [] words3 = userCommand.split(" ");
+                    if (words3[0].equalsIgnoreCase("left")){
+                        findLeftFootPlayers(words3);
+                    }else if (words3[0].equalsIgnoreCase("right")){
+                        findRightFootPlayers(words3);
+                    }
                 }
             }
 
@@ -79,39 +92,101 @@ public class Application {
     }
 
     private static void findBySurnamePlayer(String[] words2) {
-        EntityDao<Player> playerEntityDao = new EntityDao<>();
+        PlayerDao playerDao = new PlayerDao();
         System.out.println("choose player surname to find\n");
-//        showPlayers(words);
         Scanner scanner = new Scanner(System.in);
         String playerChoosen = scanner.nextLine();
-
-        Optional<Player> resultPlayerOptional = playerEntityDao.findByLastName(Player.class, playerChoosen);
-        if (resultPlayerOptional.isPresent()){
-            System.out.println("Znaleziono " + resultPlayerOptional.get());
+        List<Player> resultPlayersList = playerDao.findBySurname(Player.class, playerChoosen);
+        if (resultPlayersList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultPlayersList.forEach(System.out::println);
         }else System.out.println("nie znaleziono");
-
-
     }
+
+    private static void findByNamePlayer(String[] words2){
+        PlayerDao playerDao = new PlayerDao();
+        System.out.println("choose player name to find\n");
+        Scanner scanner = new Scanner(System.in);
+        String playerChoosen = scanner.nextLine();
+        List<Player> resultPlayersList = playerDao.findByName(Player.class, playerChoosen);
+        if (resultPlayersList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultPlayersList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
+    private static void findByWeightPlayer(String[] words2){
+        PlayerDao playerDao = new PlayerDao();
+        System.out.println("choose player weight to find\n");
+        Scanner scanner = new Scanner(System.in);
+        int playerChoosen = scanner.nextInt();
+        List<Player> resultPlayersList = playerDao.findByWeight(Player.class, playerChoosen);
+        if (resultPlayersList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultPlayersList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
+    private static void findByGrowthPlayer(String[] words2){
+        PlayerDao playerDao = new PlayerDao();
+        System.out.println("choose player weight to find\n");
+        Scanner scanner = new Scanner(System.in);
+        int playerChoosen = scanner.nextInt();
+        List<Player> resultPlayersList = playerDao.findByGrowth(Player.class, playerChoosen);
+        if (resultPlayersList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultPlayersList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
 
 
     private static void findByIdPlayer(String[] words) {
         EntityDao<Player> playerEntityDao = new EntityDao<>();
         System.out.println("choose player ID to find\n");
-//        showPlayers(words);
         Scanner scanner = new Scanner(System.in);
         Long playerChoosen = Long.parseLong(scanner.nextLine());
-
         Optional<Player> resultPlayerOptional = playerEntityDao.findById(Player.class, playerChoosen);
         if (resultPlayerOptional.isPresent()){
             System.out.println("Znaleziono " + resultPlayerOptional.get());
         }else System.out.println("nie znaleziono");
-
     }
 
-    //Ta metoda ma jakiś problem-------------------------------------------------------
+    private static void findByDatePlayer(String[] words) {
+        PlayerDao playerEntityDao = new PlayerDao();
+        System.out.println("choose player birth date to find\n");
+        Scanner scanner = new Scanner(System.in);
+        LocalDate playerChoosen = LocalDate.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+        List<Player> resultPlayersList = playerEntityDao.findByDate(Player.class, playerChoosen);
+        if (resultPlayersList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultPlayersList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
+    private static void findLeftFootPlayers(String[] words2){
+        PlayerDao playerDao = new PlayerDao();
+        System.out.println("find leftfooted players:\n");
+        boolean playerChoosen = true;
+        List<Player> resultPlayersList = playerDao.findLeftFooted(Player.class, playerChoosen);
+        if (resultPlayersList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultPlayersList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
+    private static void findRightFootPlayers(String[] words2){
+        PlayerDao playerDao = new PlayerDao();
+        System.out.println("find rightfooted players:\n");
+        boolean playerChoosen = true;
+        List<Player> resultPlayersList = playerDao.findRightFooted(Player.class, playerChoosen);
+        if (resultPlayersList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultPlayersList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
     private static void deletePlayer(String[] words) {
-
-
         Player[] players = new Player[10];
         Session session = HibernateFactory.getSessionFactory().openSession();
 
@@ -207,7 +282,6 @@ public class Application {
             default:
                 throw new IllegalStateException("Unexpected value: " + possition);
         }
-
         System.out.println("Is player foot right?" + " choose y for yes");
         scanner.nextLine();
         String right = scanner.nextLine();
@@ -218,18 +292,14 @@ public class Application {
         System.out.println("Is player foot left?" + " choose y for yes");
         String left = scanner.nextLine();
         boolean leftFooted = false;
-
             if (left.equalsIgnoreCase("y")){
             leftFooted = true;
         }
-
         System.out.println("Enter acctual skill value of the player");
         double skillValue = scanner.nextDouble();
 
         playerEntityDao.saveOrUpdate(new Player(s, name, LocalDate.of(year, month, day), weight, hight, choosenPossition, rightFootted, leftFooted,skillValue));
-
     }
-
 
     private static void showPlayers(String[] words) {
         EntityDao<Player> playerEntityDao = new EntityDao<>();

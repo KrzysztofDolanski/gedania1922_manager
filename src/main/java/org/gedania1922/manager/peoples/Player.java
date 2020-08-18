@@ -37,7 +37,6 @@ public class Player {
     private Set<Training> trainings;
 
 
-
     public Player(String surname, String name) {
         this.surname = surname;
         this.name = name;
@@ -61,7 +60,6 @@ public class Player {
         GOALKEEPER, LEFT_FULLBACK, RIGHT_FULLBACK, SWEEPER, CENTER_BACK,
         DEFENSIVE_MIDFIELDER, CENTRAL_MIDFIELDER, ATTACKING_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER,
         CENTER_FORWARD, STRIKER, SECOND_STRIKER;
-
 
     }
 

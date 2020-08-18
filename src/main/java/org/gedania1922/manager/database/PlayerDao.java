@@ -10,7 +10,9 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,8 +20,8 @@ public class PlayerDao  {
 
     private HibernateFactory hibernateFactory = new HibernateFactory();
 
-    public <T extends LastNameSearchable> List<T> findByLastName(Class<T> classType, String surname){
-        List<T> list = new ArrayList<>();
+    public List<Player> findBySurname(Class<Player> classType, String surname){
+        List<Player>list = new ArrayList<>();
 
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
@@ -28,11 +30,11 @@ public class PlayerDao  {
             CriteriaBuilder cb = session.getCriteriaBuilder();
 
             // obiekt reprezentujący zapytanie
-            CriteriaQuery<T> criteriaQuery = cb.createQuery(classType);
+            CriteriaQuery<Player> criteriaQuery = cb.createQuery(classType);
 
             // obiekt reprezentujący tabelę bazodanową.
             // do jakiej tabeli kierujemy nasze zapytanie?
-            Root<T> rootTable = criteriaQuery.from(classType);
+            Root<Player> rootTable = criteriaQuery.from(classType);
 
             // wykonanie zapytania
             criteriaQuery.select(rootTable)
@@ -52,5 +54,100 @@ public class PlayerDao  {
         return list;
     }
 
+    public List<Player> findByName(Class<Player> classType, String name){
+        List<Player>list = new ArrayList<>();
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Player> criteriaQuery = cb.createQuery(classType);
+            Root<Player> rootTable = criteriaQuery.from(classType);
+            criteriaQuery.select(rootTable)
+                    .where(cb.equal(rootTable.get("name"), name));
+            list.addAll(session.createQuery(criteriaQuery).list());
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return list;
+    }
 
+    public List<Player> findByWeight(Class<Player> classType, double weight){
+        List<Player>list = new ArrayList<>();
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Player> criteriaQuery = cb.createQuery(classType);
+            Root<Player> rootTable = criteriaQuery.from(classType);
+            criteriaQuery.select(rootTable)
+                    .where(cb.equal(rootTable.get("weight"), weight));
+            list.addAll(session.createQuery(criteriaQuery).list());
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Player> findByGrowth(Class<Player> classType, double growth){
+        List<Player>list = new ArrayList<>();
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Player> criteriaQuery = cb.createQuery(classType);
+            Root<Player> rootTable = criteriaQuery.from(classType);
+            criteriaQuery.select(rootTable)
+                    .where(cb.equal(rootTable.get("growth"), growth));
+            list.addAll(session.createQuery(criteriaQuery).list());
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Player> findByDate(Class<Player> classType, LocalDate date){
+        List<Player>list = new ArrayList<>();
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Player> criteriaQuery = cb.createQuery(classType);
+            Root<Player> rootTable = criteriaQuery.from(classType);
+            criteriaQuery.select(rootTable)
+                    .where(cb.equal(rootTable.get("birthDate"), date));
+            list.addAll(session.createQuery(criteriaQuery).list());
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Player> findLeftFooted(Class<Player> classType, boolean leftFooted){
+        List<Player>list = new ArrayList<>();
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Player> criteriaQuery = cb.createQuery(classType);
+            Root<Player> rootTable = criteriaQuery.from(classType);
+            criteriaQuery.select(rootTable)
+                    .where(cb.equal(rootTable.get("leftFooted"), leftFooted));
+            list.addAll(session.createQuery(criteriaQuery).list());
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return list;
+    }
+
+
+    public List<Player> findRightFooted(Class<Player> classType, boolean rightFooted){
+        List<Player>list = new ArrayList<>();
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Player> criteriaQuery = cb.createQuery(classType);
+            Root<Player> rootTable = criteriaQuery.from(classType);
+            criteriaQuery.select(rootTable)
+                    .where(cb.equal(rootTable.get("rightFooted"), rightFooted));
+            list.addAll(session.createQuery(criteriaQuery).list());
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return list;
+    }
 }
