@@ -9,10 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class EntityDao <T>{
 
@@ -42,6 +39,19 @@ public class EntityDao <T>{
             he.printStackTrace();
         }
         return Optional.empty();
+    }
+
+
+    public Set<T> findById2(Class<T> classType, Long id) {
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+
+            // istnieje prawdopodobieństwo, że rekord nie zostanie odnaleziony
+            return Set.of(session.get(classType, id));
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return Set.of();
     }
 
 //    public Optional<T> findByBirthDate(Class<T> classType, LocalDate date) {

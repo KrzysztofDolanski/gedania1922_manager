@@ -19,12 +19,14 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "teamId")
+    private String teamName;
+
+    @OneToMany(mappedBy = "teamName")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Player> players = new HashSet<>();
 
-    @OneToMany (mappedBy = "teamId")
+    @OneToMany (mappedBy = "teamName")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Trainer> trainer = new HashSet<>();
@@ -34,5 +36,13 @@ public class Team {
     @EqualsAndHashCode.Exclude
     private Set<Training> trainings = new HashSet<>();
 
+    public Team(String teamName) {
+        this.teamName = teamName;
+    }
 
+    public Team(String teamName, Set<Player> players, Set<Trainer> trainer) {
+        this.teamName = teamName;
+        this.players = players;
+        this.trainer = trainer;
+    }
 }

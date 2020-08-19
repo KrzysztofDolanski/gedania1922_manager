@@ -1,10 +1,7 @@
 package org.gedania1922.manager;
 
 
-import org.gedania1922.manager.database.EntityDao;
-import org.gedania1922.manager.database.HibernateFactory;
-import org.gedania1922.manager.database.LastNameSearchable;
-import org.gedania1922.manager.database.PlayerDao;
+import org.gedania1922.manager.database.*;
 import org.gedania1922.manager.peoples.Player;
 import org.gedania1922.manager.peoples.Team;
 import org.gedania1922.manager.peoples.Trainer;
@@ -13,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.Table;
+import java.sql.Array;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Month;
@@ -92,7 +90,6 @@ public class Application {
                                 findByPositionPlayer(words2);
                             }
                         }
-
                     } while (!userCommand.equalsIgnoreCase("quit"));
 
                 }else if (wordsPrevious[0].equalsIgnoreCase("trainer")) {
@@ -107,18 +104,54 @@ public class Application {
                         userCommandTrainer = scanner.nextLine();
                         String[] words = userCommandTrainer.split(" ");
 
-                        if (words[0].equalsIgnoreCase("trainer")&&words[1].equalsIgnoreCase("add")){
+                        if (words[0].equalsIgnoreCase("trainer")
+                                &&words[1].equalsIgnoreCase("add")){
                             addTrainer(words);
+                        }else if (words[0].equalsIgnoreCase("trainer")
+                                && words[1].equalsIgnoreCase("find")
+                                && words[2].equalsIgnoreCase("by")) {
+                            System.out.println(" id\n surname\n name\n certyficates");
+                            userCommandTrainer = scanner.nextLine();
+                            String[] words2 = userCommandTrainer.split(" ");
+                            if (words2[0].equalsIgnoreCase("id")) {
+                                findByIdTrainer(words2);
+                            }else if (words2[0].equalsIgnoreCase("surname")){
+                                findBySurnameTrainer(words2);
+                            }else if (words2[0].equalsIgnoreCase("name")){
+                                findByNameTrainer(words2);
+                            }else if (words2[0].equalsIgnoreCase("certyficates")){
+                                findByCertyficatesTrainer(words2);
+                            }
+                        }else if (words[0].equalsIgnoreCase("trainer")
+                                && words[1].equalsIgnoreCase("show")){
+                            showTrainers(words);
+                        }else if (words[0].equalsIgnoreCase("trainer")
+                        && words[1].equalsIgnoreCase("delete")){
+                            deleteTrainer(words);
                         }
-
-
-                }while (!userCommandTrainer.equalsIgnoreCase("quit"));
+                }
+                    while (!userCommandTrainer.equalsIgnoreCase("quit"));
 
                 }else if (wordsPrevious[0].equalsIgnoreCase("trening")){
                     System.out.println("metody do treningu");
                 }else if (wordsPrevious[0].equalsIgnoreCase("team")){
-                    System.out.println("metodu do drużyny");
-                }
+                    String userCommandTrainer;
+
+                        System.out.println("write command");
+                        System.out.println("Team add \n" +
+                                "Team show \n" +
+                                "Team find by \n" +
+                                "Team delete\n" +
+                                "Quit");
+                        userCommandTrainer = scanner.nextLine();
+                        String[] words = userCommandTrainer.split(" ");
+
+                        if (words[0].equalsIgnoreCase("team")
+                                && words[1].equalsIgnoreCase("add")) {
+                            addTeam(words);
+                    }
+
+                }while (!userCommandPrevious.equalsIgnoreCase("quit"));
 
             } while (!userCommandPrevious.equalsIgnoreCase("quit"));
 
@@ -136,6 +169,24 @@ public class Application {
             scanner.close();
         }
 
+    private static void addTeam(String[] words) {
+        EntityDao<Team> teamEntityDao = new EntityDao<>();
+        EntityDao<Player> playerEntityDao = new EntityDao<>();
+        EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Podaj ID zawodnika");
+        Long playerID = Long.parseLong(scanner.nextLine());
+        System.out.println("Podaj ID trenera");
+        Long trainerID = Long.parseLong(scanner.nextLine());
+        Set<Player> byIdPlayer = playerEntityDao.findById2(Player.class, playerID);
+        Set<Trainer> byIdTrainer = trainerEntityDao.findById2(Trainer.class, trainerID);
+        System.out.println("podaj nazwę drużyny");
+        String teamName = scanner.nextLine();
+
+        teamEntityDao.saveOrUpdate(new Team(teamName, byIdPlayer, byIdTrainer));
+
+    }
+
     private static void addTrainer(String[] words) {
         EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
         Scanner scanner = new Scanner(System.in);
@@ -149,6 +200,75 @@ public class Application {
         trainerEntityDao.saveOrUpdate(new Trainer(surname, name, certyficates));
     }
 
+    private static void findByIdTrainer(String[] words) {
+        EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
+        System.out.println("choose trainer ID to find\n");
+        Scanner scanner = new Scanner(System.in);
+        Long trainerChoosen = Long.parseLong(scanner.nextLine());
+        Optional<Trainer> resultPlayerOptional = trainerEntityDao.findById(Trainer.class, trainerChoosen);
+        if (resultPlayerOptional.isPresent()){
+            System.out.println("Znaleziono " + resultPlayerOptional.get());
+        }else System.out.println("nie znaleziono");
+    }
+
+    private static void findByNameTrainer(String[] words2) {
+        TrainerDao trainerDao = new TrainerDao();
+        System.out.println("choose trainer name to find\n");
+        Scanner scanner = new Scanner(System.in);
+        String trainerChoosen = scanner.nextLine();
+        List<Trainer> resultTrainerList = trainerDao.findByName(Trainer.class, trainerChoosen);
+        if (resultTrainerList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultTrainerList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
+    private static void findBySurnameTrainer(String[] words2) {
+        TrainerDao trainerDao = new TrainerDao();
+        System.out.println("choose trainer surname to find\n");
+        Scanner scanner = new Scanner(System.in);
+        String trainerChoosen = scanner.nextLine();
+        List<Trainer> resultTrainerList = trainerDao.findBySurname(Trainer.class, trainerChoosen);
+        if (resultTrainerList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultTrainerList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
+    private static void findByCertyficatesTrainer(String[] words2) {
+        TrainerDao trainerDao = new TrainerDao();
+        System.out.println("choose trainer certyficate to find\n");
+        Scanner scanner = new Scanner(System.in);
+        String trainerChoosen = scanner.nextLine();
+        List<Trainer> resultTrainerList = trainerDao.findByCertyficates(Trainer.class, trainerChoosen);
+        if (resultTrainerList.stream().findFirst().isPresent()){
+            System.out.println("Znaleziono");
+            resultTrainerList.forEach(System.out::println);
+        }else System.out.println("nie znaleziono");
+    }
+
+
+    private static void deleteTrainer(String[] words) {
+        Session session = HibernateFactory.getSessionFactory().openSession();
+
+        EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
+        System.out.println("choose player number to delete\n");
+        Scanner scanner = new Scanner(System.in);
+        Long trainerChoosen =  Long.parseLong(scanner.nextLine());
+        Optional<Trainer> trainerToDeleteFromDataBase = trainerEntityDao.findById(Trainer.class, trainerChoosen);
+        if (trainerToDeleteFromDataBase.isPresent()){
+            Trainer trainer = trainerToDeleteFromDataBase.get();
+            System.out.println("Usuwam" + trainerToDeleteFromDataBase.get());
+            trainerEntityDao.delete(trainer);
+        } else System.out.println("Nie znaleziono");
+        session.close();
+    }
+
+
+    private static void showTrainers(String[] words) {
+        EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
+        trainerEntityDao.findAll(Trainer.class).stream().forEach(System.out::println);
+    }
 
     private static void findBySurnamePlayer(String[] words2) {
         PlayerDao playerDao = new PlayerDao();
@@ -293,17 +413,25 @@ public class Application {
                 "STRIKER \n" +
                 "SECOND_STRIKER");
         Scanner scanner = new Scanner(System.in);
-        Player.Position playerChoosen = Player.Position.valueOf(scanner.nextLine());
-        List<Player> resultPlayersList = playerDao.findPosition(Player.class, playerChoosen);
-        if (resultPlayersList.stream().findFirst().isPresent()){
-            System.out.println("Znaleziono");
-            resultPlayersList.forEach(System.out::println);
-        }else System.out.println("nie znaleziono");
+        boolean error = true;
+        do {
+         try {
+             Player.Position playerChoosen = Player.Position.valueOf(scanner.nextLine());
+             List<Player> resultPlayersList = playerDao.findPosition(Player.class, playerChoosen);
+             error = false;
+             if (resultPlayersList.stream().findFirst().isPresent()){
+                 System.out.println("Znaleziono");
+                 resultPlayersList.forEach(System.out::println);
+             }else System.out.println("nie znaleziono");
+         }catch (InputMismatchException e){
+             System.out.println("podaj poprawnie pozycję");
+             scanner.nextLine();
+         }
+        }while (error);
     }
 
 
     private static void deletePlayer(String[] words) {
-        Player[] players = new Player[10];
         Session session = HibernateFactory.getSessionFactory().openSession();
 
         EntityDao<Player> playerEntityDao = new EntityDao<>();
@@ -319,11 +447,12 @@ public class Application {
         session.close();
     }
 
+
     private static void addPlayer(String[] words) {
         EntityDao<Player> playerEntityDao = new EntityDao<>();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Write surname");
-        String s = scanner.nextLine();
+        String surname = scanner.nextLine();
         System.out.println("write name");
         String name = scanner.nextLine();
         System.out.println("Write birth - year");
@@ -352,52 +481,63 @@ public class Application {
                 "12 for STRIKER \n" +
                 "13 for SECOND_STRIKER");
 
-        int possition = scanner.nextInt();
-        Player.Position choosenPossition;
+        Player.Position choosenPossition = null;
+        boolean error = true;
+        do {
+            try {
+                int possition = scanner.nextInt();
+                switch (possition){
+                    case 1:
+                        choosenPossition = Player.Position.GOALKEEPER;
+                        break;
+                    case 2:
+                        choosenPossition = Player.Position.LEFT_FULLBACK;
+                        break;
+                    case 3:
+                        choosenPossition = Player.Position.RIGHT_FULLBACK;
+                        break;
+                    case 4:
+                        choosenPossition = Player.Position.SWEEPER;
+                        break;
+                    case 5:
+                        choosenPossition = Player.Position.CENTER_BACK;
+                        break;
+                    case 6:
+                        choosenPossition = Player.Position.DEFENSIVE_MIDFIELDER;
+                        break;
+                    case 7:
+                        choosenPossition = Player.Position.CENTRAL_MIDFIELDER;
+                        break;
+                    case 8:
+                        choosenPossition = Player.Position.ATTACKING_MIDFIELDER;
+                        break;
+                    case 9:
+                        choosenPossition = Player.Position.LEFT_MIDFIELDER;
+                        break;
+                    case 10:
+                        choosenPossition = Player.Position.RIGHT_MIDFIELDER;
+                        break;
+                    case 11:
+                        choosenPossition = Player.Position.CENTER_FORWARD;
+                        break;
+                    case 12:
+                        choosenPossition = Player.Position.STRIKER;
+                        break;
+                    case 13:
+                        choosenPossition = Player.Position.SECOND_STRIKER;
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + possition);
+                }
+                error = false;
+            }catch (InputMismatchException e){
+                System.out.println("podaj poprawną pozycję");
+                scanner.nextLine();
+            }
 
-        switch (possition){
-            case 1:
-                choosenPossition = Player.Position.GOALKEEPER;
-                break;
-            case 2:
-                choosenPossition = Player.Position.LEFT_FULLBACK;
-                break;
-            case 3:
-                choosenPossition = Player.Position.RIGHT_FULLBACK;
-                break;
-            case 4:
-                choosenPossition = Player.Position.SWEEPER;
-                break;
-            case 5:
-                choosenPossition = Player.Position.CENTER_BACK;
-                break;
-            case 6:
-                choosenPossition = Player.Position.DEFENSIVE_MIDFIELDER;
-                break;
-            case 7:
-                choosenPossition = Player.Position.CENTRAL_MIDFIELDER;
-                break;
-            case 8:
-                choosenPossition = Player.Position.ATTACKING_MIDFIELDER;
-                break;
-            case 9:
-                choosenPossition = Player.Position.LEFT_MIDFIELDER;
-                break;
-            case 10:
-                choosenPossition = Player.Position.RIGHT_MIDFIELDER;
-                break;
-            case 11:
-                choosenPossition = Player.Position.CENTER_FORWARD;
-                break;
-            case 12:
-                choosenPossition = Player.Position.STRIKER;
-                break;
-            case 13:
-                choosenPossition = Player.Position.SECOND_STRIKER;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + possition);
-        }
+        }while (error);
+
+
         System.out.println("Is player foot right?" + " choose y for yes");
         scanner.nextLine();
         String right = scanner.nextLine();
@@ -414,8 +554,18 @@ public class Application {
         System.out.println("Enter acctual skill value of the player");
         double skillValue = scanner.nextDouble();
 
-        playerEntityDao.saveOrUpdate(new Player(s, name, LocalDate.of(year, month, day),
-                weight, hight, choosenPossition, rightFootted, leftFooted,skillValue));
+        System.out.println("podaj nazwę zespołu");
+        EntityDao<Team> teamEntityDao = new EntityDao<>();
+        scanner.nextLine();
+        String teamName = scanner.nextLine();
+
+        Team team = new Team(teamName);
+        teamEntityDao.saveOrUpdate(team);
+
+        playerEntityDao.saveOrUpdate(new Player(surname, name, LocalDate.of(year, month, day),
+                weight, hight, choosenPossition, rightFootted, leftFooted, skillValue, team));
+
+        
     }
 
     private static void showPlayers(String[] words) {

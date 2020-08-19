@@ -14,7 +14,7 @@ public class Trainer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private String surmane;
     private String name;
     private String certyficates;
@@ -22,7 +22,7 @@ public class Trainer {
     @ManyToOne
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Team teamId;
+    private Team teamName;
 
     public Trainer(String surmane, String name) {
         this.surmane = surmane;
@@ -33,5 +33,12 @@ public class Trainer {
         this.surmane = surmane;
         this.name = name;
         this.certyficates = certyficates;
+    }
+
+    public Trainer(String surmane, String name, String certyficates, Team teamName) {
+        this.surmane = surmane;
+        this.name = name;
+        this.certyficates = certyficates;
+        this.teamName = teamName;
     }
 }
