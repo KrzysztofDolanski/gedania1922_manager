@@ -137,6 +137,7 @@ public class Application {
                 }else if (wordsPrevious[0].equalsIgnoreCase("team")){
                     String userCommandTrainer;
 
+                    do {
                         System.out.println("write command");
                         System.out.println("Team add \n" +
                                 "Team show \n" +
@@ -149,9 +150,10 @@ public class Application {
                         if (words[0].equalsIgnoreCase("team")
                                 && words[1].equalsIgnoreCase("add")) {
                             addTeam(words);
-                    }
+                        }
 
-                }while (!userCommandPrevious.equalsIgnoreCase("quit"));
+                    }while (!userCommandPrevious.equalsIgnoreCase("quit"));
+                }
 
             } while (!userCommandPrevious.equalsIgnoreCase("quit"));
 
@@ -180,7 +182,7 @@ public class Application {
         Long trainerID = Long.parseLong(scanner.nextLine());
         Set<Player> byIdPlayer = playerEntityDao.findById2(Player.class, playerID);
         Set<Trainer> byIdTrainer = trainerEntityDao.findById2(Trainer.class, trainerID);
-        System.out.println("podaj nazwę drużyny");
+        System.out.print("podaj nazwę drużyny");
         String teamName = scanner.nextLine();
 
         teamEntityDao.saveOrUpdate(new Team(teamName, byIdPlayer, byIdTrainer));
@@ -197,7 +199,15 @@ public class Application {
         System.out.println("write certyficates");
         String certyficates = scanner.nextLine();
 
-        trainerEntityDao.saveOrUpdate(new Trainer(surname, name, certyficates));
+        System.out.println("podaj nazwę zespołu");
+        EntityDao<Team> teamEntityDao = new EntityDao<>();
+        scanner.nextLine();
+        String teamName = scanner.nextLine();
+
+        Team team = new Team(teamName);
+        teamEntityDao.saveOrUpdate(team);
+
+        trainerEntityDao.saveOrUpdate(new Trainer(surname, name, certyficates, team));
     }
 
     private static void findByIdTrainer(String[] words) {
