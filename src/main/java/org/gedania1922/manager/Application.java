@@ -48,6 +48,7 @@ public class Application {
                                 "Player show \n" +
                                 "Player find by \n" +
                                 "Player delete\n" +
+                                "Player update skills\n" +
                                 "Quit");
                         userCommand = scanner.nextLine();
                         String[] words = userCommand.split(" ");
@@ -89,6 +90,10 @@ public class Application {
                             } else if (words2[0].equalsIgnoreCase("position")) {
                                 findByPositionPlayer(words2);
                             }
+                        } else if (words[0].equalsIgnoreCase("player")
+                                && words[1].equalsIgnoreCase("update")
+                                && words[2].equalsIgnoreCase("skills")) {
+                            updatePlayerSkills(words);
                         }
                     } while (!userCommand.equalsIgnoreCase("quit"));
 
@@ -258,7 +263,7 @@ public class Application {
         Long playerChoosen = Long.parseLong(scanner.nextLine());
         List<Training> byPlayerId = trainingDao.findByPlayerId(Training.class, playerChoosen);
         Stream<Training> stream = byPlayerId.stream();
-        stream.forEach(System.out::println);
+        stream.map(Training::getTypeOfTraining).forEach(System.out::println);
 
     }
 
@@ -351,6 +356,16 @@ public class Application {
     private static void showTrainers(String[] words) {
         EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
         trainerEntityDao.findAll(Trainer.class).stream().forEach(System.out::println);
+    }
+
+    private static void updatePlayerSkills(String[] words){
+
+        PlayerDao playerDao = new PlayerDao();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Choose Player ID");
+        Long playerChoosen = scanner.nextLong();
+
+        playerDao.updateSkills(Player.class, playerChoosen);
     }
 
     private static void findBySurnamePlayer(String[] words2) {

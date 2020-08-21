@@ -1,6 +1,7 @@
 package org.gedania1922.manager.database;
 
 import org.gedania1922.manager.peoples.Player;
+import org.gedania1922.manager.player_tests.SkillsMachine;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,9 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 public class PlayerDao  {
@@ -166,4 +165,20 @@ public class PlayerDao  {
         }
         return list;
     }
-}
+
+    public void updateSkills(Class<Player> classType, long id){
+
+        SkillsMachine skillsMachine = new SkillsMachine();
+        double skills = skillsMachine.playerSkillsUpdate();
+        EntityDao<Player> playerEntityDao = new EntityDao<>();
+        Optional<Player> byId = playerEntityDao.findById(classType, id);
+        byId.stream().findFirst().get().setSkillsValue(skills);
+        playerEntityDao.saveOrUpdate(byId.get());
+
+    }
+    }
+
+
+
+
+

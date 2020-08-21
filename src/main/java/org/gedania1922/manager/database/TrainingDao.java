@@ -23,7 +23,7 @@ public class TrainingDao {
             CriteriaQuery<Training> criteriaQuery = cb.createQuery(classType);
             Root<Training> rootTable = criteriaQuery.from(classType);
             criteriaQuery.select(rootTable)
-                    .where(cb.equal(rootTable.get("playerId"), playerId));
+                    .where(cb.equal(rootTable.get("players"), playerId));
             list.addAll(session.createQuery(criteriaQuery).list());
         } catch (HibernateException he) {
             he.printStackTrace();
