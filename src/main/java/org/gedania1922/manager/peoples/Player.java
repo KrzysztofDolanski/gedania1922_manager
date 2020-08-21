@@ -5,6 +5,7 @@ import org.gedania1922.manager.training.Training;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -33,9 +34,23 @@ public class Player {
     @EqualsAndHashCode.Exclude
     private Team teamName;
 
-    @ManyToMany (fetch = FetchType.EAGER)
+
+    @ManyToMany(
+//            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            fetch = FetchType.EAGER)
+//    @JoinTable (name = "player_training", joinColumns = @JoinColumn(name = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "typeOfTraining"))
     private Set<Training> trainings;
 
+    public void addTraining(Training training){
+        this.trainings.add(training);
+        training.getPlayers();
+    }
+
+    public void removeTraining(Training training){
+        this.trainings.remove(training);
+        training.getPlayers();
+    }
 
     public Player(String surname, String name) {
         this.surname = surname;
@@ -67,6 +82,22 @@ public class Player {
         this.leftFooted = leftFooted;
         this.skillsValue = skillsValue;
         this.teamName = teamName;
+    }
+
+    public Player(String surname, String name, LocalDate birthDate, double weight, double growth,
+                  Position positionOnField, boolean rightFooted, boolean leftFooted, double skillsValue,
+                  Team teamName, Set<Training> trainings) {
+        this.surname = surname;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.weight = weight;
+        this.growth = growth;
+        this.positionOnField = positionOnField;
+        this.rightFooted = rightFooted;
+        this.leftFooted = leftFooted;
+        this.skillsValue = skillsValue;
+        this.teamName = teamName;
+        this.trainings = trainings;
     }
 
     public enum Position {

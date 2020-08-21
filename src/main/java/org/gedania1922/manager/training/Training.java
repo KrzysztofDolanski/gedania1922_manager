@@ -16,18 +16,56 @@ public class Training {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private LocalDate dateOfTraining;
     private String typeOfTraining;
 
-    @ManyToMany (mappedBy = "trainings")
+    @ManyToOne
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Player> players;
+    private Player players;
 
 
     public Training(LocalDate dateOfTraining, String typeOfTraining) {
         this.dateOfTraining = dateOfTraining;
         this.typeOfTraining = typeOfTraining;
+    }
+
+    public Training(LocalDate dateOfTraining, String typeOfTraining, Player players) {
+        this.dateOfTraining = dateOfTraining;
+        this.typeOfTraining = typeOfTraining;
+        this.players = players;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDateOfTraining() {
+        return dateOfTraining;
+    }
+
+    public void setDateOfTraining(LocalDate dateOfTraining) {
+        this.dateOfTraining = dateOfTraining;
+    }
+
+    public String getTypeOfTraining() {
+        return typeOfTraining;
+    }
+
+    public void setTypeOfTraining(String typeOfTraining) {
+        this.typeOfTraining = typeOfTraining;
+    }
+
+    public Player getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Player players) {
+        this.players = players;
     }
 }

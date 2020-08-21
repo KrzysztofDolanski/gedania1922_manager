@@ -132,8 +132,37 @@ public class Application {
                 }
                     while (!userCommandTrainer.equalsIgnoreCase("quit"));
 
-                }else if (wordsPrevious[0].equalsIgnoreCase("trening")){
-                    System.out.println("metody do treningu");
+                }else if (wordsPrevious[0].equalsIgnoreCase("training")){
+                    String userCommandTrainer;
+
+                    do {
+                        System.out.println("write command");
+                        System.out.println("Training add \n" +
+                                "Training show \n" +
+                                "Training find by \n" +
+                                "Training delete\n" +
+                                "Quit");
+                        userCommandTrainer = scanner.nextLine();
+                        String[] words = userCommandTrainer.split(" ");
+
+                        if (words[0].equalsIgnoreCase("training")
+                                && words[1].equalsIgnoreCase("add")) {
+                            addTraining(words);
+                        }else if (words[0].equalsIgnoreCase("training")&&
+                                words[1].equalsIgnoreCase("find")
+                                && words[2].equalsIgnoreCase("by")) {
+                            System.out.println("id\n playerId");
+                            userCommandTrainer = scanner.nextLine();
+                            String[] words2 = userCommandTrainer.split(" ");
+                            if (words2[0].equalsIgnoreCase("id")) {
+                                findByIdTraining(words2);
+                            } else if (words2[0].equalsIgnoreCase("playerId")) {
+                                findTrainingByPlayerId(words2);
+                            }
+                        }
+
+                    }while (!userCommandPrevious.equalsIgnoreCase("quit"));
+
                 }else if (wordsPrevious[0].equalsIgnoreCase("team")){
                     String userCommandTrainer;
 
@@ -186,6 +215,50 @@ public class Application {
         String teamName = scanner.nextLine();
 
         teamEntityDao.saveOrUpdate(new Team(teamName, byIdPlayer, byIdTrainer));
+    }
+
+    private static void addTraining(String[] words) {
+        EntityDao<Training> trainingEntityDao = new EntityDao<>();
+        EntityDao<Player> playerEntityDao = new EntityDao<>();
+        EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Write training type");
+        String typeOfTraining = scanner.nextLine();
+        System.out.println("Write training - year");
+        int year = scanner.nextInt();
+        System.out.println("Write training - month");
+        int month = scanner.nextInt();
+        System.out.println("Write training - day");
+        int day = scanner.nextInt();
+        System.out.println("Write player ID");
+        scanner.nextLine();
+        Long playerID = Long.parseLong(scanner.nextLine());
+        Set<Player> byIdPlayer = playerEntityDao.findById2(Player.class, playerID);
+
+        Player player = byIdPlayer.stream().findFirst().get();
+
+        trainingEntityDao.saveOrUpdate(new Training(LocalDate.of(year, month, day), typeOfTraining, player));
+    }
+
+    private static void findByIdTraining(String[] words) {
+        EntityDao<Training> trainingEntityDao = new EntityDao<>();
+        System.out.println("choose training ID to find\n");
+        Scanner scanner = new Scanner(System.in);
+        Long trainingChoosen = Long.parseLong(scanner.nextLine());
+        Optional<Training> resultTrainingOptional = trainingEntityDao.findById(Training.class, trainingChoosen);
+        if (resultTrainingOptional.isPresent()){
+            System.out.println("Znaleziono " + resultTrainingOptional.get());
+        }else System.out.println("nie znaleziono");
+    }
+
+    private static void findTrainingByPlayerId(String[] words){
+        TrainingDao trainingDao = new TrainingDao();
+        System.out.println("choose player ID to find training\n");
+        Scanner scanner = new Scanner(System.in);
+        Long playerChoosen = Long.parseLong(scanner.nextLine());
+        List<Training> byPlayerId = trainingDao.findByPlayerId(Training.class, playerChoosen);
+        Stream<Training> stream = byPlayerId.stream();
+        stream.forEach(System.out::println);
 
     }
 
@@ -564,7 +637,7 @@ public class Application {
         System.out.println("Enter acctual skill value of the player");
         double skillValue = scanner.nextDouble();
 
-        System.out.println("podaj nazwę zespołu");
+        System.out.println("Enter team name");
         EntityDao<Team> teamEntityDao = new EntityDao<>();
         scanner.nextLine();
         String teamName = scanner.nextLine();
@@ -572,8 +645,12 @@ public class Application {
         Team team = new Team(teamName);
         teamEntityDao.saveOrUpdate(team);
 
+
+
         playerEntityDao.saveOrUpdate(new Player(surname, name, LocalDate.of(year, month, day),
                 weight, hight, choosenPossition, rightFootted, leftFooted, skillValue, team));
+
+
 
         
     }
