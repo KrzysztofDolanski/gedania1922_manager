@@ -35,11 +35,7 @@ public class Player {
     private Team teamName;
 
 
-    @ManyToMany(
-//            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
-            fetch = FetchType.EAGER)
-//    @JoinTable (name = "player_training", joinColumns = @JoinColumn(name = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "typeOfTraining"))
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Training> trainings;
 
     public void addTraining(Training training){
