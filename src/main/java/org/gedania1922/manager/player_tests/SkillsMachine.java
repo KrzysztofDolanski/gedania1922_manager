@@ -239,7 +239,7 @@ public class SkillsMachine {
         goalKeepingSkillsUpdate();
         mentalSkillsUpdate();
 
-        playerSkills = goalkeepingSkills + mentalSkills +physicalSkills +technicalSkills;
+        playerSkills = goalkeepingSkills + mentalSkills +physicalSkills + technicalSkills;
 
         return playerSkills;
     }

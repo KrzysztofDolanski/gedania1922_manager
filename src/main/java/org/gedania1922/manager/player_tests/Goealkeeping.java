@@ -1,7 +1,21 @@
 package org.gedania1922.manager.player_tests;
 
+import lombok.*;
+import org.gedania1922.manager.peoples.Player;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Goealkeeping {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private double aerialReach;
     private double communication;
     private double firstTouch;
@@ -12,6 +26,9 @@ public class Goealkeeping {
     private double reflexes;
     private double rushingOut;
     private double throwing;
+
+
+
 
     public double getAerialReach() {
         return aerialReach;
@@ -92,4 +109,13 @@ public class Goealkeeping {
     public void setThrowing(double throwing) {
         this.throwing = throwing;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
 }

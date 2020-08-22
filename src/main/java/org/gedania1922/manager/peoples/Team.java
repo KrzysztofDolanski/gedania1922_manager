@@ -17,7 +17,7 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String teamName;
 
@@ -44,5 +44,45 @@ public class Team {
         this.teamName = teamName;
         this.players = players;
         this.trainer = trainer;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public Set<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
+    }
+
+    public Set<Trainer> getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Set<Trainer> trainer) {
+        this.trainer = trainer;
+    }
+
+    public Set<Training> getTrainings() {
+        return trainings;
+    }
+
+    public void setTrainings(Set<Training> trainings) {
+        this.trainings = trainings;
     }
 }

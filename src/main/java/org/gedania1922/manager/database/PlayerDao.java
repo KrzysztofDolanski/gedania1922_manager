@@ -15,12 +15,12 @@ import java.time.LocalDate;
 import java.util.*;
 
 
-public class PlayerDao  {
+public class PlayerDao {
 
     private HibernateFactory hibernateFactory = new HibernateFactory();
 
-    public List<Player> findBySurname(Class<Player> classType, String surname){
-        List<Player>list = new ArrayList<>();
+    public List<Player> findBySurname(Class<Player> classType, String surname) {
+        List<Player> list = new ArrayList<>();
 
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
@@ -53,8 +53,8 @@ public class PlayerDao  {
         return list;
     }
 
-    public List<Player> findByName(Class<Player> classType, String name){
-        List<Player>list = new ArrayList<>();
+    public List<Player> findByName(Class<Player> classType, String name) {
+        List<Player> list = new ArrayList<>();
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -69,8 +69,8 @@ public class PlayerDao  {
         return list;
     }
 
-    public List<Player> findByWeight(Class<Player> classType, double weight){
-        List<Player>list = new ArrayList<>();
+    public List<Player> findByWeight(Class<Player> classType, double weight) {
+        List<Player> list = new ArrayList<>();
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -85,8 +85,8 @@ public class PlayerDao  {
         return list;
     }
 
-    public List<Player> findPosition(Class<Player> classType, Player.Position position){
-        List<Player>list = new ArrayList<>();
+    public List<Player> findPosition(Class<Player> classType, Player.Position position) {
+        List<Player> list = new ArrayList<>();
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -101,8 +101,8 @@ public class PlayerDao  {
         return list;
     }
 
-    public List<Player> findByGrowth(Class<Player> classType, double growth){
-        List<Player>list = new ArrayList<>();
+    public List<Player> findByGrowth(Class<Player> classType, double growth) {
+        List<Player> list = new ArrayList<>();
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -117,8 +117,8 @@ public class PlayerDao  {
         return list;
     }
 
-    public List<Player> findByDate(Class<Player> classType, LocalDate date){
-        List<Player>list = new ArrayList<>();
+    public List<Player> findByDate(Class<Player> classType, LocalDate date) {
+        List<Player> list = new ArrayList<>();
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -133,8 +133,8 @@ public class PlayerDao  {
         return list;
     }
 
-    public List<Player> findLeftFooted(Class<Player> classType, boolean leftFooted){
-        List<Player>list = new ArrayList<>();
+    public List<Player> findLeftFooted(Class<Player> classType, boolean leftFooted) {
+        List<Player> list = new ArrayList<>();
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -150,8 +150,8 @@ public class PlayerDao  {
     }
 
 
-    public List<Player> findRightFooted(Class<Player> classType, boolean rightFooted){
-        List<Player>list = new ArrayList<>();
+    public List<Player> findRightFooted(Class<Player> classType, boolean rightFooted) {
+        List<Player> list = new ArrayList<>();
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -166,7 +166,7 @@ public class PlayerDao  {
         return list;
     }
 
-    public void updateSkills(Class<Player> classType, long id){
+    public void updateSkills(Class<Player> classType, long id) {
 
         SkillsMachine skillsMachine = new SkillsMachine();
         double skills = skillsMachine.playerSkillsUpdate();
@@ -176,7 +176,7 @@ public class PlayerDao  {
         playerEntityDao.saveOrUpdate(byId.get());
 
     }
-    }
+}
 
 
 

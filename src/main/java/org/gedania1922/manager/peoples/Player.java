@@ -1,15 +1,20 @@
 package org.gedania1922.manager.peoples;
 
 import lombok.*;
+import org.gedania1922.manager.player_tests.Goealkeeping;
+import org.gedania1922.manager.player_tests.Mental;
 import org.gedania1922.manager.training.Training;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Player {
@@ -37,6 +42,9 @@ public class Player {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Training> trainings;
+
+
+
 
     public void addTraining(Training training){
         this.trainings.add(training);
@@ -95,6 +103,8 @@ public class Player {
         this.teamName = teamName;
         this.trainings = trainings;
     }
+
+
 
     public enum Position {
 

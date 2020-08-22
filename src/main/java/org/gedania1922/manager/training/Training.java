@@ -3,6 +3,7 @@ package org.gedania1922.manager.training;
 import lombok.*;
 import org.gedania1922.manager.peoples.Player;
 import org.gedania1922.manager.peoples.Team;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,7 +18,10 @@ public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+//    @CreationTimestamp
     private LocalDate dateOfTraining;
+
     private String typeOfTraining;
 
     @ManyToOne
