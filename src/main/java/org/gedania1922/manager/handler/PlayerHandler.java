@@ -27,51 +27,51 @@ public class PlayerHandler {
             String[] words = userCommand.split(" ");
 
             if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("show")) {
-                showPlayers(words);
+                showPlayers();
             } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("add")) {
-                addPlayer(words);
+                addPlayer();
             } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("delete")) {
-                deletePlayer(words);
+                deletePlayer();
             } else if (words[0].equalsIgnoreCase("player") && words[1].equalsIgnoreCase("find")
                     && words[2].equalsIgnoreCase("by")) {
                 System.out.println(" id\n surname\n name\n weight\n growth \n date\n position\n foot");
                 userCommand = scanner.nextLine();
                 String[] words2 = userCommand.split(" ");
                 if (words2[0].equalsIgnoreCase("id")) {
-                    findByIdPlayer(words2);
+                    findByIdPlayer();
                 } else if (words2[0].equalsIgnoreCase("surname")) {
-                    findBySurnamePlayer(words2);
+                    findBySurnamePlayer();
                 } else if (words2[0].equalsIgnoreCase("name")) {
-                    findByNamePlayer(words2);
+                    findByNamePlayer();
                 } else if (words2[0].equalsIgnoreCase("weight")) {
-                    findByWeightPlayer(words2);
+                    findByWeightPlayer();
                 } else if (words2[0].equalsIgnoreCase("growth")) {
-                    findByGrowthPlayer(words2);
+                    findByGrowthPlayer();
                 } else if (words2[0].equalsIgnoreCase("date")) {
-                    findByDatePlayer(words2);
+                    findByDatePlayer();
                 } else if (words2[0].equalsIgnoreCase("foot")) {
                     System.out.println("right\n left\n both");
                     userCommand = scanner.nextLine();
                     String[] words3 = userCommand.split(" ");
                     if (words3[0].equalsIgnoreCase("left")) {
-                        findLeftFootPlayers(words3);
+                        findLeftFootPlayers();
                     } else if (words3[0].equalsIgnoreCase("right")) {
-                        findRightFootPlayers(words3);
+                        findRightFootPlayers();
                     } else if (words3[0].equalsIgnoreCase("both")) {
-                        findBothFootedPlayer(words3);
+                        findBothFootedPlayer();
                     }
                 } else if (words2[0].equalsIgnoreCase("position")) {
-                    findByPositionPlayer(words2);
+                    findByPositionPlayer();
                 }
             } else if (words[0].equalsIgnoreCase("player")
                     && words[1].equalsIgnoreCase("update")
                     && words[2].equalsIgnoreCase("skills")) {
-                updatePlayerSkills(words);
+                updatePlayerSkills();
             }
         } while (!userCommand.equalsIgnoreCase("quit"));
     }
 
-    private void updatePlayerSkills(String[] words) {
+    private void updatePlayerSkills() {
 
         PlayerDao playerDao = new PlayerDao();
         Scanner scanner = new Scanner(System.in);
@@ -81,9 +81,9 @@ public class PlayerHandler {
         playerDao.updateSkills(Player.class, playerChoosen);
     }
 
-    private void findBySurnamePlayer(String[] words2) {
+    private void findBySurnamePlayer() {
         PlayerDao playerDao = new PlayerDao();
-        System.out.println("choose player surname to find\n");
+        System.out.println("choose player surname to find");
         Scanner scanner = new Scanner(System.in);
         String playerChoosen = scanner.nextLine();
         List<Player> resultPlayersList = playerDao.findBySurname(Player.class, playerChoosen);
@@ -93,9 +93,9 @@ public class PlayerHandler {
         } else System.out.println("nie znaleziono");
     }
 
-    private void findByNamePlayer(String[] words2) {
+    private void findByNamePlayer() {
         PlayerDao playerDao = new PlayerDao();
-        System.out.println("choose player name to find\n");
+        System.out.println("choose player name to find");
         Scanner scanner = new Scanner(System.in);
         String playerChoosen = scanner.nextLine();
         List<Player> resultPlayersList = playerDao.findByName(Player.class, playerChoosen);
@@ -105,9 +105,9 @@ public class PlayerHandler {
         } else System.out.println("nie znaleziono");
     }
 
-    private void findByWeightPlayer(String[] words2) {
+    private void findByWeightPlayer() {
         PlayerDao playerDao = new PlayerDao();
-        System.out.println("choose player weight to find\n");
+        System.out.println("choose player weight to find");
         Scanner scanner = new Scanner(System.in);
         Long playerChoosen = Long.parseLong(scanner.nextLine());
         List<Player> resultPlayersList = playerDao.findByWeight(Player.class, playerChoosen);
@@ -117,9 +117,9 @@ public class PlayerHandler {
         } else System.out.println("nie znaleziono");
     }
 
-    private void findByGrowthPlayer(String[] words2) {
+    private void findByGrowthPlayer() {
         PlayerDao playerDao = new PlayerDao();
-        System.out.println("choose player weight to find\n");
+        System.out.println("choose player weight to find");
         Scanner scanner = new Scanner(System.in);
         Long playerChoosen = Long.parseLong(scanner.nextLine());
         List<Player> resultPlayersList = playerDao.findByGrowth(Player.class, playerChoosen);
@@ -130,7 +130,7 @@ public class PlayerHandler {
     }
 
 
-    private void findByIdPlayer(String[] words) {
+    private void findByIdPlayer() {
         EntityDao<Player> playerEntityDao = new EntityDao<>();
         System.out.println("choose player ID to find\n");
         Scanner scanner = new Scanner(System.in);
@@ -141,9 +141,9 @@ public class PlayerHandler {
         } else System.out.println("nie znaleziono");
     }
 
-    private void findByDatePlayer(String[] words) {
+    private void findByDatePlayer() {
         PlayerDao playerEntityDao = new PlayerDao();
-        System.out.println("choose player birth date to find\n");
+        System.out.println("choose player birth date to find");
         Scanner scanner = new Scanner(System.in);
         try {
             System.out.println("year");
@@ -163,9 +163,9 @@ public class PlayerHandler {
         }
     }
 
-    private void findLeftFootPlayers(String[] words2) {
+    private void findLeftFootPlayers() {
         PlayerDao playerDao = new PlayerDao();
-        System.out.println("find leftfooted players:\n");
+        System.out.println("find leftfooted players:");
         boolean playerChoosen = true;
         List<Player> resultPlayersList = playerDao.findLeftFooted(Player.class, playerChoosen);
         if (resultPlayersList.stream().findFirst().isPresent()) {
@@ -174,9 +174,9 @@ public class PlayerHandler {
         } else System.out.println("nie znaleziono");
     }
 
-    private void findRightFootPlayers(String[] words2) {
+    private void findRightFootPlayers() {
         PlayerDao playerDao = new PlayerDao();
-        System.out.println("find rightfooted players:\n");
+        System.out.println("find rightfooted players:");
         boolean playerChoosen = true;
         List<Player> resultPlayersList = playerDao.findRightFooted(Player.class, playerChoosen);
         if (resultPlayersList.stream().findFirst().isPresent()) {
@@ -197,9 +197,9 @@ public class PlayerHandler {
         return setToReturn;
     }
 
-    private void findBothFootedPlayer(String[] words2) {
+    private void findBothFootedPlayer() {
         PlayerDao playerDao = new PlayerDao();
-        System.out.println("find rightfooted players:\n");
+        System.out.println("find rightfooted players:");
         boolean playerChoosen = true;
         List<Player> resultPlayersList = (playerDao.findRightFooted(Player.class, playerChoosen));
         List<Player> leftFooted = playerDao.findLeftFooted(Player.class, playerChoosen);
@@ -216,7 +216,7 @@ public class PlayerHandler {
         } else System.out.println("nie znaleziono");
     }
 
-    private void findByPositionPlayer(String[] words2) {
+    private void findByPositionPlayer() {
         PlayerDao playerDao = new PlayerDao();
         System.out.println("choose player position to find\n" +
                 "GOALKEEPER \n" +
@@ -251,11 +251,11 @@ public class PlayerHandler {
     }
 
 
-    private void deletePlayer(String[] words) {
+    private void deletePlayer() {
         Session session = HibernateFactory.getSessionFactory().openSession();
 
         EntityDao<Player> playerEntityDao = new EntityDao<>();
-        System.out.println("choose player number to delete\n");
+        System.out.println("choose player number to delete");
         Scanner scanner = new Scanner(System.in);
         Long playerChoosen = Long.parseLong(scanner.nextLine());
         Optional<Player> playerToDeleteFromDataBase = playerEntityDao.findById(Player.class, playerChoosen);
@@ -268,7 +268,7 @@ public class PlayerHandler {
     }
 
 
-    private void addPlayer(String[] words) {
+    private void addPlayer() {
         EntityDao<Player> playerEntityDao = new EntityDao<>();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Write surname");
@@ -389,7 +389,7 @@ public class PlayerHandler {
 
     }
 
-    private void showPlayers(String[] words) {
+    private void showPlayers() {
         EntityDao<Player> playerEntityDao = new EntityDao<>();
         playerEntityDao.findAll(Player.class).stream().forEach(System.out::println);
     }

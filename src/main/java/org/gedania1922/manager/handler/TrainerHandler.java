@@ -71,7 +71,6 @@ public class TrainerHandler {
 
             System.out.println("podaj nazwę zespołu");
             EntityDao<Team> teamEntityDao = new EntityDao<>();
-            scanner.nextLine();
             String teamName = scanner.nextLine();
 
             Team team = new Team(teamName);
@@ -85,7 +84,7 @@ public class TrainerHandler {
 
     private void findByIdTrainer(String[] words) {
         EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
-        System.out.println("choose trainer ID to find\n");
+        System.out.println("choose trainer ID to find");
         Scanner scanner = new Scanner(System.in);
         Long trainerChoosen = Long.parseLong(scanner.nextLine());
         Optional<Trainer> resultPlayerOptional = trainerEntityDao.findById(Trainer.class, trainerChoosen);
@@ -96,7 +95,7 @@ public class TrainerHandler {
 
     private void findByNameTrainer(String[] words2) {
         TrainerDao trainerDao = new TrainerDao();
-        System.out.println("choose trainer name to find\n");
+        System.out.println("choose trainer name to find");
         Scanner scanner = new Scanner(System.in);
         String trainerChoosen = scanner.nextLine();
         List<Trainer> resultTrainerList = trainerDao.findByName(Trainer.class, trainerChoosen);
@@ -108,7 +107,7 @@ public class TrainerHandler {
 
     private void findBySurnameTrainer(String[] words2) {
         TrainerDao trainerDao = new TrainerDao();
-        System.out.println("choose trainer surname to find\n");
+        System.out.println("choose trainer surname to find");
         Scanner scanner = new Scanner(System.in);
         String trainerChoosen = scanner.nextLine();
         List<Trainer> resultTrainerList = trainerDao.findBySurname(Trainer.class, trainerChoosen);
@@ -120,7 +119,7 @@ public class TrainerHandler {
 
     private void findByCertyficatesTrainer(String[] words2) {
         TrainerDao trainerDao = new TrainerDao();
-        System.out.println("choose trainer certyficate to find\n");
+        System.out.println("choose trainer certyficate to find");
         Scanner scanner = new Scanner(System.in);
         String trainerChoosen = scanner.nextLine();
         List<Trainer> resultTrainerList = trainerDao.findByCertyficates(Trainer.class, trainerChoosen);
@@ -135,7 +134,7 @@ public class TrainerHandler {
         Session session = HibernateFactory.getSessionFactory().openSession();
 
         EntityDao<Trainer> trainerEntityDao = new EntityDao<>();
-        System.out.println("choose player number to delete\n");
+        System.out.println("choose player number to delete");
         Scanner scanner = new Scanner(System.in);
         Long trainerChoosen = Long.parseLong(scanner.nextLine());
         Optional<Trainer> trainerToDeleteFromDataBase = trainerEntityDao

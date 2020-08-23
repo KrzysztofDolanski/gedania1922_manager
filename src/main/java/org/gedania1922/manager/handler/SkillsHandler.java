@@ -99,7 +99,7 @@ public class SkillsHandler {
 
         try {
             EntityDao<Player> playerEntityDao = new EntityDao<>();
-            System.out.println("choose player ID\n");
+            System.out.println("choose player ID");
             long playerId = Long.parseLong(scanner.nextLine());
             Set<Player> byIdPlayer = playerEntityDao.findById2(Player.class, playerId);
 
@@ -119,7 +119,7 @@ public class SkillsHandler {
         Scanner scanner = new Scanner(System.in);
 
         try {
-            System.out.println("choose player ID\n");
+            System.out.println("choose player ID");
             long playerId = Long.parseLong(scanner.nextLine());
 
             EntityDao<Player> playerEntityDao = new EntityDao<>();
@@ -166,7 +166,7 @@ public class SkillsHandler {
 
         try {
             EntityDao<Player> playerEntityDao = new EntityDao<>();
-            System.out.println("choose player ID\n");
+            System.out.println("choose player ID");
             long playerId = Long.parseLong(scanner.nextLine());
             Set<Player> byIdPlayer = playerEntityDao.findById2(Player.class, playerId);
 
@@ -185,7 +185,7 @@ public class SkillsHandler {
         Scanner scanner = new Scanner(System.in);
 
         try {
-            System.out.println("choose player ID\n");
+            System.out.println("choose player ID");
             long playerId = Long.parseLong(scanner.nextLine());
 
             EntityDao<Player> playerEntityDao = new EntityDao<>();
@@ -240,7 +240,7 @@ public class SkillsHandler {
 
         try {
             EntityDao<Player> playerEntityDao = new EntityDao<>();
-            System.out.println("choose player ID\n");
+            System.out.println("choose player ID");
             long playerId = Long.parseLong(scanner.nextLine());
             Set<Player> byIdPlayer = playerEntityDao.findById2(Player.class, playerId);
 
@@ -260,7 +260,7 @@ public class SkillsHandler {
         Scanner scanner = new Scanner(System.in);
 
         try {
-            System.out.println("choose player ID\n");
+            System.out.println("choose player ID");
             long playerId = Long.parseLong(scanner.nextLine());
 
             EntityDao<Player> playerEntityDao = new EntityDao<>();
@@ -288,8 +288,8 @@ public class SkillsHandler {
 
             EntityDao<Physical> physicalEntityDao = new EntityDao<>();
 
-            physicalEntityDao.saveOrUpdate(new Physical(null, acceleration, agility, balance, jumpReach, nauralFitness
-                    , peace, stamina, strenght, player));
+            physicalEntityDao.saveOrUpdate(new Physical(null, acceleration, agility, balance, jumpReach
+                    , nauralFitness, peace, stamina, strenght, player));
 
         } catch (OptimisticLockException e) {
             System.err.println("Use numbers to find ID");
@@ -302,7 +302,7 @@ public class SkillsHandler {
 
         try {
             EntityDao<Player> playerEntityDao = new EntityDao<>();
-            System.out.println("choose player ID\n");
+            System.out.println("choose player ID");
             long playerId = Long.parseLong(scanner.nextLine());
             Set<Player> byIdPlayer = playerEntityDao.findById2(Player.class, playerId);
 
