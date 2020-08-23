@@ -3,7 +3,6 @@ package org.gedania1922.manager.handler;
 import org.gedania1922.manager.database.EntityDao;
 import org.gedania1922.manager.database.TrainingDao;
 import org.gedania1922.manager.peoples.Player;
-import org.gedania1922.manager.peoples.Trainer;
 import org.gedania1922.manager.training.Training;
 
 import java.time.LocalDate;
@@ -51,6 +50,7 @@ public class TrainingHandler {
 
     private void addTraining(String[] words) {
         EntityDao<Training> trainingEntityDao = new EntityDao<>();
+
         EntityDao<Player> playerEntityDao = new EntityDao<>();
 
         Scanner scanner = new Scanner(System.in);
@@ -65,11 +65,13 @@ public class TrainingHandler {
             int day = Integer.parseInt(scanner.nextLine());
             System.out.println("Write player ID");
             Long playerID = Long.parseLong(scanner.nextLine());
+
             Set<Player> byIdPlayer = playerEntityDao.findById2(Player.class, playerID);
 
             Player player = byIdPlayer.stream().findFirst().get();
 
             trainingEntityDao.saveOrUpdate(new Training(LocalDate.of(year, month, day), typeOfTraining, player));
+
         } catch (IllegalArgumentException e) {
             System.err.println("use yyyy mm dd or letters for ID");
         }

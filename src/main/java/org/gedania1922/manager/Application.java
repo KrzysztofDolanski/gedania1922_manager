@@ -2,10 +2,8 @@ package org.gedania1922.manager;
 
 
 import org.gedania1922.manager.database.*;
-import org.gedania1922.manager.handler.PlayerHandler;
-import org.gedania1922.manager.handler.TeamHandler;
-import org.gedania1922.manager.handler.TrainerHandler;
-import org.gedania1922.manager.handler.TrainingHandler;
+import org.gedania1922.manager.handler.*;
+
 import java.util.*;
 
 
@@ -23,6 +21,7 @@ public class Application {
         TrainerHandler trainerHandler = new TrainerHandler();
         TrainingHandler trainingHandler = new TrainingHandler();
         TeamHandler teamHandler = new TeamHandler();
+        SkillsHandler skillsHandler = new SkillsHandler();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -34,6 +33,7 @@ public class Application {
                     "Trainer\n" +
                     "Team\n" +
                     "Training\n" +
+                    "Skills\n" +
                     "Quit");
             userCommandPrevious = scanner.nextLine();
             String[] wordsPrevious = userCommandPrevious.split(" ");
@@ -49,6 +49,9 @@ public class Application {
 
             } else if (wordsPrevious[0].equalsIgnoreCase("team")) {
                 teamHandler.handle();
+
+            } else if (wordsPrevious[0].equalsIgnoreCase("skills")){
+                skillsHandler.handle();
             }
 
         } while (!userCommandPrevious.equalsIgnoreCase("quit"));

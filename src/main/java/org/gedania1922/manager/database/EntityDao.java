@@ -22,6 +22,7 @@ public class EntityDao <T>{
             session.saveOrUpdate(entity);
 
             transaction.commit();
+
         } catch (HibernateException he) {
             if (transaction != null) {
                 transaction.rollback();

@@ -1,7 +1,19 @@
-package org.gedania1922.manager.player_tests;
+package org.gedania1922.manager.skills;
 
+import lombok.*;
+import org.gedania1922.manager.peoples.Player;
+
+import javax.persistence.*;
+
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Physical {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private double acceleration;
     private double agility;
     private double balance;
@@ -11,6 +23,10 @@ public class Physical {
     private double stamina;
     private double strenght;
 
+    @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Player player;
 
     public double getAcceleration() {
         return acceleration;

@@ -385,6 +385,8 @@ public class PlayerHandler {
 
         playerEntityDao.saveOrUpdate(new Player(surname, name, LocalDate.of(year, month, day),
                 weight, hight, choosenPossition, rightFootted, leftFooted, skillValue, team));
+
+
     }
 
     private void showPlayers(String[] words) {

@@ -1,7 +1,6 @@
-package org.gedania1922.manager.player_tests;
+package org.gedania1922.manager.skills;
 
 import org.gedania1922.manager.database.PlayerDao;
-import org.gedania1922.manager.peoples.Player;
 
 import java.util.Scanner;
 
@@ -13,7 +12,7 @@ public class SkillsMachine {
     private double technicalSkills;
 
 
-    Goealkeeping goalkeeping = new Goealkeeping();
+    Goalkeeping goalkeeping = new Goalkeeping();
     Mental mental = new Mental();
     Physical physical = new Physical();
     Technical technical = new Technical();
@@ -66,7 +65,7 @@ public class SkillsMachine {
          + goalkeeping.getReflexes() +
          + goalkeeping.getRushingOut() +
          + goalkeeping.getThrowing();
-        scanner.close();
+
     }
 
     private void mentalSkillsUpdate(){
@@ -92,7 +91,7 @@ public class SkillsMachine {
         mental.setDecision(decision);
         System.out.println("write determination");
         double determination = scanner.nextInt();
-        mental.setDeterminaion(determination);
+        mental.setDetermination(determination);
         System.out.println("write flair");
         double flair = scanner.nextInt();
         mental.setFlair(flair);
@@ -122,7 +121,7 @@ public class SkillsMachine {
         mental.getComposure() +
         mental.getConcentration() +
         mental.getDecision() +
-        mental.getDeterminaion() +
+        mental.getDetermination() +
         mental.getFlair() +
         mental.getLeadership() +
         mental.getOffTheBall() +
@@ -130,7 +129,7 @@ public class SkillsMachine {
         mental.getTeamWork() +
         mental.getVision() +
         mental.getWorkRate();
-        scanner.close();
+
     }
 
     private void physicalSkillsUpdate(){
@@ -170,7 +169,7 @@ public class SkillsMachine {
                 physical.getStamina()+
                 physical.getStrenght();
 
-        scanner.close();
+
     }
 
     public void technicalSkillsUpdate(){
@@ -238,6 +237,8 @@ public class SkillsMachine {
         double playerSkills = 0;
         goalKeepingSkillsUpdate();
         mentalSkillsUpdate();
+        physicalSkillsUpdate();
+        technicalSkillsUpdate();
 
         playerSkills = goalkeepingSkills + mentalSkills +physicalSkills + technicalSkills;
 

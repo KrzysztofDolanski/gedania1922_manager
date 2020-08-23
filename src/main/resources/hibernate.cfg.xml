@@ -29,6 +29,10 @@
         <mapping class="org.gedania1922.manager.peoples.Trainer"/>
         <mapping class="org.gedania1922.manager.peoples.Team"/>
         <mapping class="org.gedania1922.manager.training.Training"/>
+        <mapping class="org.gedania1922.manager.skills.Goalkeeping"/>
+        <mapping class="org.gedania1922.manager.skills.Mental"/>
+        <mapping class="org.gedania1922.manager.skills.Technical"/>
+        <mapping class="org.gedania1922.manager.skills.Physical"/>
 
 
     </session-factory>

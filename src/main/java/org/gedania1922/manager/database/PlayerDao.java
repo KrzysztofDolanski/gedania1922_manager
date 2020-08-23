@@ -1,11 +1,10 @@
 package org.gedania1922.manager.database;
 
 import org.gedania1922.manager.peoples.Player;
-import org.gedania1922.manager.player_tests.SkillsMachine;
+import org.gedania1922.manager.skills.SkillsMachine;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 
 import javax.persistence.criteria.CriteriaBuilder;

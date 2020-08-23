@@ -5,7 +5,6 @@ import org.gedania1922.manager.training.Training;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data

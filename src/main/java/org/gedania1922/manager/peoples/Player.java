@@ -1,15 +1,16 @@
 package org.gedania1922.manager.peoples;
 
 import lombok.*;
-import org.gedania1922.manager.player_tests.Goealkeeping;
-import org.gedania1922.manager.player_tests.Mental;
+import org.gedania1922.manager.skills.Goalkeeping;
+import org.gedania1922.manager.skills.Mental;
+import org.gedania1922.manager.skills.Physical;
+import org.gedania1922.manager.skills.Technical;
 import org.gedania1922.manager.training.Training;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.Set;
 
 @Data
@@ -18,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Player {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,36 +45,31 @@ public class Player {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Training> trainings;
 
+    @OneToMany (fetch = FetchType.EAGER, mappedBy = "player")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Goalkeeping> goalkeeping ;
+
+
+    @OneToMany (fetch = FetchType.EAGER, mappedBy = "player")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Mental> mental;
+
+
+    @OneToMany (fetch = FetchType.EAGER, mappedBy = "player")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Physical> physical;
+
+
+    @OneToMany (fetch = FetchType.EAGER, mappedBy = "player")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Technical> technical;
 
 
 
-    public void addTraining(Training training){
-        this.trainings.add(training);
-        training.getPlayers();
-    }
-
-    public void removeTraining(Training training){
-        this.trainings.remove(training);
-        training.getPlayers();
-    }
-
-    public Player(String surname, String name) {
-        this.surname = surname;
-        this.name = name;
-    }
-
-    public Player(String surname, String name, LocalDate birthDate, double weight,
-                  double growth, Position positionOnField, boolean rightFooted, boolean leftFooted, double skillsValue) {
-        this.surname = surname;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.weight = weight;
-        this.growth = growth;
-        this.positionOnField = positionOnField;
-        this.rightFooted = rightFooted;
-        this.leftFooted = leftFooted;
-        this.skillsValue = skillsValue;
-    }
 
     public Player(String surname, String name, LocalDate birthDate, double weight, double growth,
                   Position positionOnField, boolean rightFooted, boolean leftFooted, double skillsValue, Team teamName) {
@@ -211,6 +208,8 @@ public class Player {
     public void setTrainings(Set<Training> trainings) {
         this.trainings = trainings;
     }
+
+
 }
 
 
