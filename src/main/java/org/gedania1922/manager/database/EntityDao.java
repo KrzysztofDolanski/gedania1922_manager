@@ -4,14 +4,17 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Stream;
 
-public class EntityDao <T>{
+public class EntityDao <T> {
 
     public void saveOrUpdate(T entity) {
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
@@ -116,4 +119,43 @@ public class EntityDao <T>{
         }
         return list;
     }
+
+    public List<T> showBestOrderBySkills(Class<T> classType, String order) {
+        List<T> list = new ArrayList<>();
+
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<T> criteriaQuery = cb.createQuery(classType);
+            Root<T> rootTable = criteriaQuery.from(classType);
+            criteriaQuery.select(rootTable).orderBy(cb.desc(rootTable.get(order)));
+            list.addAll(session.createQuery(criteriaQuery).list());
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<T> showWorstOrderBySkills(Class<T> classType, String order) {
+        List<T> list = new ArrayList<>();
+
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<T> criteriaQuery = cb.createQuery(classType);
+            Root<T> rootTable = criteriaQuery.from(classType);
+            criteriaQuery.select(rootTable).orderBy(cb.asc(rootTable.get(order)));
+            list.addAll(session.createQuery(criteriaQuery).list());
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return list;
+    }
+
 }
+
+

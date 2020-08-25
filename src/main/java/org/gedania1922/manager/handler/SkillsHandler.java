@@ -32,13 +32,50 @@ public class SkillsHandler {
                 if (words[0].equalsIgnoreCase("skills") && words[1].equalsIgnoreCase("goalkeeping")) {
 
                     do {
-                        System.out.println(" update\n show\n quit");
+                        System.out.println(" update\n show\n sort\n quit");
                         userCommand = scanner.nextLine();
                         String[] words2 = userCommand.split(" ");
                         if (words2[0].equalsIgnoreCase("update")) {
                             addGoalkeepingSkills();
-                        } else if (words2[0].equals("show")) {
+                        } else if (words2[0].equalsIgnoreCase("show")) {
                             showGoalkeepingSkills();
+                        } else if (words2[0].equalsIgnoreCase("sort")){
+                            do {
+                            System.out.println(" descending\n ascending\n quit");
+                            userCommand = scanner.nextLine();
+                            String[] words3 = userCommand.split(" ");
+                            if (words3[0].equalsIgnoreCase("descending")){
+                                System.out.println("by:\naerialReach;\n" +
+                                        "communication;\n" +
+                                        "firstTouch;\n" +
+                                        "handling;\n" +
+                                        "kicking;\n" +
+                                        "oneToOnes;\n" +
+                                        "passing;\n" +
+                                        "reflexes;\n" +
+                                        "rushingOut;\n" +
+                                        "throwing");
+                                String skills = scanner.nextLine();
+                                showBestGoalkeepingSkills(skills);
+
+                            }else if (words3[0].equalsIgnoreCase("ascending")){
+                                    System.out.println("by:\naerialReach;\n" +
+                                            "communication;\n" +
+                                            "firstTouch;\n" +
+                                            "handling;\n" +
+                                            "kicking;\n" +
+                                            "oneToOnes;\n" +
+                                            "passing;\n" +
+                                            "reflexes;\n" +
+                                            "rushingOut;\n" +
+                                            "throwing");
+                                    String skills = scanner.nextLine();
+                                    showWorstGoalkeepingSkills(skills);
+                            }
+
+                        }while (!userCommand.equalsIgnoreCase("quit"));
+
+
                         }
 
                     } while (!userCommand.equalsIgnoreCase("quit"));
@@ -366,10 +403,23 @@ public class SkillsHandler {
                     , freeKickTaking, heading, longShots, longThrows, marking, passingTechnic, penaltyTaking, tackling
                     , technique, player));
 
-        } catch (OptimisticLockException e) {
+        } catch (MissingFormatArgumentException e) {
             System.err.println("Use numbers to find ID");
         }
-
     }
+
+    private void showBestGoalkeepingSkills(String words) {
+        EntityDao<Goalkeeping> goalkeepingEntityDao = new EntityDao<>();
+        goalkeepingEntityDao.showBestOrderBySkills(Goalkeeping.class, words)
+                .stream().forEach(System.out::println);
+    }
+
+    private void showWorstGoalkeepingSkills(String words) {
+        EntityDao<Goalkeeping> goalkeepingEntityDao = new EntityDao<>();
+        goalkeepingEntityDao.showWorstOrderBySkills(Goalkeeping.class, words)
+                .stream().forEach(System.out::println);
+    }
+
+
 }
 

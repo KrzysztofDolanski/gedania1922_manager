@@ -1,10 +1,12 @@
 package org.gedania1922.manager.handler;
 
 import org.gedania1922.manager.database.EntityDao;
+import org.gedania1922.manager.database.GoalkeepingDao;
 import org.gedania1922.manager.database.HibernateFactory;
 import org.gedania1922.manager.database.PlayerDao;
 import org.gedania1922.manager.peoples.Player;
 import org.gedania1922.manager.peoples.Team;
+import org.gedania1922.manager.skills.Goalkeeping;
 import org.hibernate.Session;
 
 import java.time.LocalDate;
@@ -22,6 +24,7 @@ public class PlayerHandler {
                     "Player find by \n" +
                     "Player delete\n" +
                     "Player update skills\n" +
+                    "Player best skills\n" +
                     "Quit");
             userCommand = scanner.nextLine();
             String[] words = userCommand.split(" ");
@@ -67,6 +70,25 @@ public class PlayerHandler {
                     && words[1].equalsIgnoreCase("update")
                     && words[2].equalsIgnoreCase("skills")) {
                 updatePlayerSkills();
+            } else if (words[0].equalsIgnoreCase("player")
+                && words[1].equalsIgnoreCase("best")
+                && words[2].equalsIgnoreCase("skills")) {
+                System.out.println("goalkeeping\n physical\n technical\n mental\n quit");
+                userCommand = scanner.nextLine();
+                String[] words3 = userCommand.split(" ");
+
+                    if (words3[0].equalsIgnoreCase("goalkeeping")) {
+                        System.out.println("choose: ");
+                        String skills = scanner.nextLine();
+                        showBestPlayerBySkillInGoalkeeping(skills);
+                    } else if (words3[0].equalsIgnoreCase("physical")) {
+                        System.out.println("make methods to physical");
+                    } else if (words3[0].equalsIgnoreCase("technical")) {
+                        System.out.println("make methods to technical");
+                    } else if (words3[0].equalsIgnoreCase("mental")) {
+                        System.out.println("make methods to mental");
+                    }
+
             }
         } while (!userCommand.equalsIgnoreCase("quit"));
     }
@@ -393,5 +415,15 @@ public class PlayerHandler {
         EntityDao<Player> playerEntityDao = new EntityDao<>();
         playerEntityDao.findAll(Player.class).stream().forEach(System.out::println);
     }
+
+
+    private void showBestPlayerBySkillInGoalkeeping(String words) {
+
+        EntityDao<Goalkeeping> goalkeepingEntityDao = new EntityDao<>();
+        goalkeepingEntityDao.showBestOrderBySkillsDescending(Goalkeeping.class, words)
+                .stream().forEach(System.out::println);
+
+    }
+
 
 }
