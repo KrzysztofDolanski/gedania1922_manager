@@ -41,7 +41,7 @@ public class SkillsHandler {
                             showGoalkeepingSkills();
                         } else if (words2[0].equalsIgnoreCase("sort")){
                             do {
-                            System.out.println(" descending\n ascending\n quit");
+                            System.out.println("descending\n ascending\n quit");
                             userCommand = scanner.nextLine();
                             String[] words3 = userCommand.split(" ");
                             if (words3[0].equalsIgnoreCase("descending")){
@@ -84,7 +84,7 @@ public class SkillsHandler {
                 } else if (words[0].equalsIgnoreCase("skills") && words[1].equalsIgnoreCase("mental")) {
 
                     do {
-                        System.out.println(" update\n show\n quit");
+                        System.out.println(" update\n show\n sort\n quit");
                         userCommand = scanner.nextLine();
                         String[] words2 = userCommand.split(" ");
                         if (words2[0].equalsIgnoreCase("update")) {
@@ -92,27 +92,107 @@ public class SkillsHandler {
                         } else if (words2[0].equals("show")) {
                             showMentalSkills();
                         }
+                        else if (words2[0].equalsIgnoreCase("sort")){
+                            do {
+                                System.out.println("descending\n ascending\n quit");
+                                userCommand = scanner.nextLine();
+                                String[] words3 = userCommand.split(" ");
+                                if (words3[0].equalsIgnoreCase("descending")){
+                                    System.out.println("by:\naggression"
+                                    + "\n anticipation"
+                                    + "\n bravery"
+                                    + "\n composure"
+                                    + "\n concentration"
+                                    + "\n decision"
+                                    + "\n determination"
+                                    + "\n flair"
+                                    + "\n leadership"
+                                    + "\n offTheBall"
+                                    + "\n positioning"
+                                    + "\n teamWork"
+                                    + "\n vision"
+                                    + "\n workRate");
+                                    String skills = scanner.nextLine();
+                                    showBestMentalSkills(skills);
+
+                                }else if (words3[0].equalsIgnoreCase("ascending")){
+                                    System.out.println("by:\naggression"
+                                            + "\n anticipation"
+                                            + "\n bravery"
+                                            + "\n composure"
+                                            + "\n concentration"
+                                            + "\n decision"
+                                            + "\n determination"
+                                            + "\n flair"
+                                            + "\n leadership"
+                                            + "\n offTheBall"
+                                            + "\n positioning"
+                                            + "\n teamWork"
+                                            + "\n vision"
+                                            + "\n workRate");
+                                    String skills = scanner.nextLine();
+                                    showWorstMentalSkills(skills);
+                                }
+
+                            }while (!userCommand.equalsIgnoreCase("quit"));
+
+
+                        }
 
                     } while (!userCommand.equalsIgnoreCase("quit"));
 
                 } else if (words[0].equalsIgnoreCase("skills") && words[1].equalsIgnoreCase("physical")) {
 
                     do {
-                        System.out.println(" update\n show\n quit");
+                        System.out.println(" update\n show\n sort\n quit");
                         userCommand = scanner.nextLine();
                         String[] words2 = userCommand.split(" ");
                         if (words2[0].equalsIgnoreCase("update")) {
                             addPhysicalSkills();
                         } else if (words2[0].equals("show")) {
                             showPhysicalSkills();
+                        }else if (words2[0].equalsIgnoreCase("sort")){
+                            do {
+                                System.out.println("descending\n ascending\n quit");
+                                userCommand = scanner.nextLine();
+                                String[] words3 = userCommand.split(" ");
+                                if (words3[0].equalsIgnoreCase("descending")){
+                                    System.out.println("by:\nacceleration\n"
+                                    + "agility\n"
+                                    + "balance\n"
+                                    + "jumpReach\n"
+                                    + "nauralFitness\n"
+                                    + "peace\n"
+                                    + "stamina\n"
+                                    + "strenght\n");
+                                    String skills = scanner.nextLine();
+                                    showBestPhysicalSkills(skills);
+
+                                }else if (words3[0].equalsIgnoreCase("ascending")){
+                                    System.out.println("by:\nacceleration\n"
+                                            + "agility\n"
+                                            + "balance\n"
+                                            + "jumpReach\n"
+                                            + "nauralFitness\n"
+                                            + "peace\n"
+                                            + "stamina\n"
+                                            + "strenght\n");
+                                    String skills = scanner.nextLine();
+                                    showWorstPhysicalSkills(skills);
+                                }
+
+                            }while (!userCommand.equalsIgnoreCase("quit"));
+
+
                         }
+
 
                     } while (!userCommand.equalsIgnoreCase("quit"));
 
                 } else if (words[0].equalsIgnoreCase("skills") && words[1].equalsIgnoreCase("technical")) {
 
                     do {
-                        System.out.println(" update\n show\n quit");
+                        System.out.println(" update\n show\n sort\n quit");
 
                     userCommand = scanner.nextLine();
                     String[] words2 = userCommand.split(" ");
@@ -121,6 +201,49 @@ public class SkillsHandler {
                             addTechnicalSkills();
                         } else if (words2[0].equals("show")) {
                             showTechnicalSkills();
+                        }else if (words2[0].equalsIgnoreCase("sort")) {
+                            do {
+                                System.out.println("descending\n ascending\n quit");
+                                userCommand = scanner.nextLine();
+                                String[] words3 = userCommand.split(" ");
+                                if (words3[0].equalsIgnoreCase("descending")) {
+                                    System.out.println("by:\ncorners\n" +
+                                    "crossing\n" +
+                                    "dribbling\n" +
+                                    "finishing\n" +
+                                    "firstTouch\n" +
+                                    "freeKickTaking\n" +
+                                    "heading\n" +
+                                    "longShots\n" +
+                                    "longThrows\n" +
+                                    "marking\n" +
+                                    "passing\n" +
+                                    "penaltyTaking\n" +
+                                    "tackling\n" +
+                                    "technique");
+                                    String skills = scanner.nextLine();
+                                    showBestTechnicalSkills(skills);
+
+                                } else if (words3[0].equalsIgnoreCase("ascending")) {
+                                    System.out.println("by:\ncorners\n" +
+                                            "crossing\n" +
+                                            "dribbling\n" +
+                                            "finishing\n" +
+                                            "firstTouch\n" +
+                                            "freeKickTaking\n" +
+                                            "heading\n" +
+                                            "longShots\n" +
+                                            "longThrows\n" +
+                                            "marking\n" +
+                                            "passing\n" +
+                                            "penaltyTaking\n" +
+                                            "tackling\n" +
+                                            "technique");
+                                    String skills = scanner.nextLine();
+                                    showWorstTechnicalSkills(skills);
+                                }
+
+                            } while (!userCommand.equalsIgnoreCase("quit"));
                         }
 
                     } while (!userCommand.equalsIgnoreCase("quit"));
@@ -128,7 +251,6 @@ public class SkillsHandler {
             } while (!userCommand.equalsIgnoreCase("quit"));
         } while (!userCommand.equalsIgnoreCase("quit"));
     }
-
 
 
     public void showGoalkeepingSkills() {
@@ -358,7 +480,7 @@ public class SkillsHandler {
         Scanner scanner = new Scanner(System.in);
 
         try {
-            System.out.println("choose player ID\n");
+            System.out.println("choose player ID");
             long playerId = Long.parseLong(scanner.nextLine());
 
             EntityDao<Player> playerEntityDao = new EntityDao<>();
@@ -396,7 +518,6 @@ public class SkillsHandler {
             System.out.println("write technique");
             int technique = Integer.parseInt(scanner.nextLine());
 
-
             EntityDao<Technical> technicalEntityDao = new EntityDao<>();
 
             technicalEntityDao.saveOrUpdate(new Technical(null, corners, crossing, dribbling, finishing, firstTouchTechnic
@@ -417,6 +538,42 @@ public class SkillsHandler {
     private void showWorstGoalkeepingSkills(String words) {
         EntityDao<Goalkeeping> goalkeepingEntityDao = new EntityDao<>();
         goalkeepingEntityDao.showWorstOrderBySkills(Goalkeeping.class, words)
+                .stream().forEach(System.out::println);
+    }
+
+    private void showBestMentalSkills(String words) {
+        EntityDao<Mental> goalkeepingEntityDao = new EntityDao<>();
+        goalkeepingEntityDao.showBestOrderBySkills(Mental.class, words)
+                .stream().forEach(System.out::println);
+    }
+
+    private void showWorstMentalSkills(String words) {
+        EntityDao<Mental> goalkeepingEntityDao = new EntityDao<>();
+        goalkeepingEntityDao.showWorstOrderBySkills(Mental.class, words)
+                .stream().forEach(System.out::println);
+    }
+
+    private void showBestPhysicalSkills(String words) {
+        EntityDao<Physical> goalkeepingEntityDao = new EntityDao<>();
+        goalkeepingEntityDao.showBestOrderBySkills(Physical.class, words)
+                .stream().forEach(System.out::println);
+    }
+
+    private void showWorstPhysicalSkills(String words) {
+        EntityDao<Physical> goalkeepingEntityDao = new EntityDao<>();
+        goalkeepingEntityDao.showWorstOrderBySkills(Physical.class, words)
+                .stream().forEach(System.out::println);
+    }
+
+    private void showBestTechnicalSkills(String words) {
+        EntityDao<Technical> goalkeepingEntityDao = new EntityDao<>();
+        goalkeepingEntityDao.showBestOrderBySkills(Technical.class, words)
+                .stream().forEach(System.out::println);
+    }
+
+    private void showWorstTechnicalSkills(String words) {
+        EntityDao<Technical> goalkeepingEntityDao = new EntityDao<>();
+        goalkeepingEntityDao.showWorstOrderBySkills(Technical.class, words)
                 .stream().forEach(System.out::println);
     }
 
