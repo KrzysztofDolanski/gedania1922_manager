@@ -78,7 +78,7 @@ public class PlayerHandler {
                 String[] words3 = userCommand.split(" ");
 
                     if (words3[0].equalsIgnoreCase("goalkeeping")) {
-                        System.out.println("choose: ");
+                        System.out.println("choose goalkeeping skill: ");
                         String skills = scanner.nextLine();
                         showBestPlayerBySkillInGoalkeeping(skills);
                     } else if (words3[0].equalsIgnoreCase("physical")) {
@@ -418,11 +418,14 @@ public class PlayerHandler {
 
 
     private void showBestPlayerBySkillInGoalkeeping(String words) {
-
+        Set<Player> playerSet = new HashSet<>();
         EntityDao<Goalkeeping> goalkeepingEntityDao = new EntityDao<>();
-        goalkeepingEntityDao.showBestOrderBySkillsDescending(Goalkeeping.class, words)
-                .stream().forEach(System.out::println);
+        Optional<Goalkeeping> first = goalkeepingEntityDao.showBestOrderBySkills(Goalkeeping.class, words)
+                .stream().findFirst();
 
+        Player player = first.get().getPlayer();
+        playerSet.add(player);
+        playerSet.forEach(System.out::println);
     }
 
 
