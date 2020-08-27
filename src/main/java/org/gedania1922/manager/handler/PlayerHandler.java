@@ -7,6 +7,9 @@ import org.gedania1922.manager.database.PlayerDao;
 import org.gedania1922.manager.peoples.Player;
 import org.gedania1922.manager.peoples.Team;
 import org.gedania1922.manager.skills.Goalkeeping;
+import org.gedania1922.manager.skills.Mental;
+import org.gedania1922.manager.skills.Physical;
+import org.gedania1922.manager.skills.Technical;
 import org.hibernate.Session;
 
 import java.time.LocalDate;
@@ -79,14 +82,66 @@ public class PlayerHandler {
 
                     if (words3[0].equalsIgnoreCase("goalkeeping")) {
                         System.out.println("choose goalkeeping skill: ");
+                        System.out.println("aerialReach;\n" +
+                                "communication;\n" +
+                                "firstTouch;\n" +
+                                "handling;\n" +
+                                "kicking;\n" +
+                                "oneToOnes;\n" +
+                                "passing;\n" +
+                                "reflexes;\n" +
+                                "rushingOut;\n" +
+                                "throwing");
                         String skills = scanner.nextLine();
                         showBestPlayerBySkillInGoalkeeping(skills);
                     } else if (words3[0].equalsIgnoreCase("physical")) {
-                        System.out.println("make methods to physical");
+                        System.out.println("choose goalkeeping skill: ");
+                        System.out.println("acceleration\n"
+                                + "agility\n"
+                                + "balance\n"
+                                + "jumpReach\n"
+                                + "nauralFitness\n"
+                                + "peace\n"
+                                + "stamina\n"
+                                + "strenght\n");
+                        String skills = scanner.nextLine();
+                        showBestPlayerBySkillInPhysical(skills);
                     } else if (words3[0].equalsIgnoreCase("technical")) {
-                        System.out.println("make methods to technical");
+                        System.out.println("choose goalkeeping skill: ");
+                        System.out.println("corners\n" +
+                                "crossing\n" +
+                                "dribbling\n" +
+                                "finishing\n" +
+                                "firstTouch\n" +
+                                "freeKickTaking\n" +
+                                "heading\n" +
+                                "longShots\n" +
+                                "longThrows\n" +
+                                "marking\n" +
+                                "passing\n" +
+                                "penaltyTaking\n" +
+                                "tackling\n" +
+                                "technique");
+                        String skills = scanner.nextLine();
+                        showBestPlayerBySkillInTechnical(skills);
                     } else if (words3[0].equalsIgnoreCase("mental")) {
-                        System.out.println("make methods to mental");
+                        System.out.println("choose goalkeeping skill: ");
+                        System.out.println("aggression"
+                                + "\n anticipation"
+                                + "\n bravery"
+                                + "\n composure"
+                                + "\n concentration"
+                                + "\n decision"
+                                + "\n determination"
+                                + "\n flair"
+                                + "\n leadership"
+                                + "\n offTheBall"
+                                + "\n positioning"
+                                + "\n teamWork"
+                                + "\n vision"
+                                + "\n workRate");
+                        String skills = scanner.nextLine();
+                        showBestPlayerBySkillInMental(skills);
                     }
 
             }
@@ -258,7 +313,7 @@ public class PlayerHandler {
         boolean error = true;
         do {
             try {
-                Player.Position playerChoosen = Player.Position.valueOf(scanner.nextLine());
+                Player.Position playerChoosen = Player.Position.valueOf(scanner.nextLine().toUpperCase());
                 List<Player> resultPlayersList = playerDao.findPosition(Player.class, playerChoosen);
                 error = false;
                 if (resultPlayersList.stream().findFirst().isPresent()) {
@@ -420,7 +475,7 @@ public class PlayerHandler {
     private void showBestPlayerBySkillInGoalkeeping(String words) {
         Set<Player> playerSet = new HashSet<>();
         EntityDao<Goalkeeping> goalkeepingEntityDao = new EntityDao<>();
-        Optional<Goalkeeping> first = goalkeepingEntityDao.showBestOrderBySkills(Goalkeeping.class, words)
+        Optional<Goalkeeping> first = goalkeepingEntityDao.showBestOrderBySkills(Goalkeeping.class, words.toLowerCase())
                 .stream().findFirst();
 
         Player player = first.get().getPlayer();
@@ -428,5 +483,37 @@ public class PlayerHandler {
         playerSet.forEach(System.out::println);
     }
 
+    private void showBestPlayerBySkillInPhysical(String words) {
+        Set<Player> playerSet = new HashSet<>();
+        EntityDao<Physical> goalkeepingEntityDao = new EntityDao<>();
+        Optional<Physical> first = goalkeepingEntityDao.showBestOrderBySkills(Physical.class, words.toLowerCase())
+                .stream().findFirst();
+
+        Player player = first.get().getPlayer();
+        playerSet.add(player);
+        playerSet.forEach(System.out::println);
+    }
+
+    private void showBestPlayerBySkillInTechnical(String words) {
+        Set<Player> playerSet = new HashSet<>();
+        EntityDao<Technical> goalkeepingEntityDao = new EntityDao<>();
+        Optional<Technical> first = goalkeepingEntityDao.showBestOrderBySkills(Technical.class, words.toLowerCase())
+                .stream().findFirst();
+
+        Player player = first.get().getPlayer();
+        playerSet.add(player);
+        playerSet.forEach(System.out::println);
+    }
+
+    private void showBestPlayerBySkillInMental(String words) {
+        Set<Player> playerSet = new HashSet<>();
+        EntityDao<Mental> goalkeepingEntityDao = new EntityDao<>();
+        Optional<Mental> first = goalkeepingEntityDao.showBestOrderBySkills(Mental.class, words.toLowerCase())
+                .stream().findFirst();
+
+        Player player = first.get().getPlayer();
+        playerSet.add(player);
+        playerSet.forEach(System.out::println);
+    }
 
 }

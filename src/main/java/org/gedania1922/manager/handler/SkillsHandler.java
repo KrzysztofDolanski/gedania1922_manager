@@ -531,49 +531,49 @@ public class SkillsHandler {
 
     private void showBestGoalkeepingSkills(String words) {
         EntityDao<Goalkeeping> goalkeepingEntityDao = new EntityDao<>();
-        goalkeepingEntityDao.showBestOrderBySkills(Goalkeeping.class, words)
+        goalkeepingEntityDao.showBestOrderBySkills(Goalkeeping.class, words.toLowerCase())
                 .stream().forEach(System.out::println);
     }
 
     private void showWorstGoalkeepingSkills(String words) {
         EntityDao<Goalkeeping> goalkeepingEntityDao = new EntityDao<>();
-        goalkeepingEntityDao.showWorstOrderBySkills(Goalkeeping.class, words)
+        goalkeepingEntityDao.showWorstOrderBySkills(Goalkeeping.class, words.toLowerCase())
                 .stream().forEach(System.out::println);
     }
 
     private void showBestMentalSkills(String words) {
         EntityDao<Mental> goalkeepingEntityDao = new EntityDao<>();
-        goalkeepingEntityDao.showBestOrderBySkills(Mental.class, words)
+        goalkeepingEntityDao.showBestOrderBySkills(Mental.class, words.toLowerCase())
                 .stream().forEach(System.out::println);
     }
 
     private void showWorstMentalSkills(String words) {
         EntityDao<Mental> goalkeepingEntityDao = new EntityDao<>();
-        goalkeepingEntityDao.showWorstOrderBySkills(Mental.class, words)
+        goalkeepingEntityDao.showWorstOrderBySkills(Mental.class, words.toLowerCase())
                 .stream().forEach(System.out::println);
     }
 
     private void showBestPhysicalSkills(String words) {
         EntityDao<Physical> goalkeepingEntityDao = new EntityDao<>();
-        goalkeepingEntityDao.showBestOrderBySkills(Physical.class, words)
+        goalkeepingEntityDao.showBestOrderBySkills(Physical.class, words.toLowerCase())
                 .stream().forEach(System.out::println);
     }
 
     private void showWorstPhysicalSkills(String words) {
         EntityDao<Physical> goalkeepingEntityDao = new EntityDao<>();
-        goalkeepingEntityDao.showWorstOrderBySkills(Physical.class, words)
+        goalkeepingEntityDao.showWorstOrderBySkills(Physical.class, words.toLowerCase())
                 .stream().forEach(System.out::println);
     }
 
     private void showBestTechnicalSkills(String words) {
         EntityDao<Technical> goalkeepingEntityDao = new EntityDao<>();
-        goalkeepingEntityDao.showBestOrderBySkills(Technical.class, words)
+        goalkeepingEntityDao.showBestOrderBySkills(Technical.class, words.toLowerCase())
                 .stream().forEach(System.out::println);
     }
 
     private void showWorstTechnicalSkills(String words) {
         EntityDao<Technical> goalkeepingEntityDao = new EntityDao<>();
-        goalkeepingEntityDao.showWorstOrderBySkills(Technical.class, words)
+        goalkeepingEntityDao.showWorstOrderBySkills(Technical.class, words.toLowerCase())
                 .stream().forEach(System.out::println);
     }
 
